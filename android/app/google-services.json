@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "770611708040",
+    "project_id": "wordle-clone-b4564",
+    "storage_bucket": "wordle-clone-b4564.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:770611708040:android:9c3d4e385824d1985c9f3d",
+        "android_client_info": {
+          "package_name": "com.example.wordle_clone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "770611708040-knbg8oj11biguni41i3n8a31nb81gln1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDrvfzGqj_l0gJo-PjmsF4lHsmpeInh1Tw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "770611708040-knbg8oj11biguni41i3n8a31nb81gln1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
