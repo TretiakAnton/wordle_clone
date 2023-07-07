@@ -1,6 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:wordle_clone/core/navigation/routes.dart';
 import 'package:wordle_clone/presentation/state_management/login_bloc/login_cubit.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -20,13 +21,14 @@ class _LoginScreenState extends State<LoginScreen> {
     return BlocListener<LoginCubit, LoginState>(
       listener: (context, state) {
         if (state is LoginCompleted) {
-          WidgetsBinding.instance.addPostFrameCallback((_) => context.router.pushNamed('path'));
+          WidgetsBinding.instance.addPostFrameCallback((_) => context.router.pushNamed(Routes.menuScreen));
         }
       },
       child: SafeArea(
         child: Scaffold(
           resizeToAvoidBottomInset: false,
           body: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               TextFormField(
                 controller: emailController,

@@ -12,6 +12,10 @@ class LoginEmailTranslator {
   }
 
   User userCredentialToUser({required firebase.UserCredential credential}) {
-    return User();
+    return User(
+      email: credential.user!.email!,
+      name: credential.user!.displayName ?? credential.user!.email!,
+      photo: credential.user!.photoURL,
+    );
   }
 }
