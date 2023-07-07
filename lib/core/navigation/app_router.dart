@@ -1,5 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:wordle_clone/core/navigation/routes.dart';
+import 'package:wordle_clone/presentation/view/screens/login_screen.dart';
 
 
 part 'app_router.gr.dart';
@@ -11,10 +13,10 @@ part 'app_router.gr.dart';
       path: Routes.loginScreen,
       initial: true,
     ),
-    AutoRoute(
+   /* AutoRoute(
       page: HomeScreen,
       path: Routes.homeScreen,
-    ),
+    ),*/
   ],
 )
 class AppRouter extends _$AppRouter {}

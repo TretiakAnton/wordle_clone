@@ -21,6 +21,9 @@ dependencies:
   auto_route: ^5.0.4
   easy_localization: ^3.0.1
   hive: ^2.2.3
+  loggy: ^2.0.3
+  http: ^0.13.6
+  dartz: ^0.10.1
   cupertino_icons: ^1.0.2
 
 

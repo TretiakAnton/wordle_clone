@@ -225,6 +225,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.3.2"
+  dartz:
+    dependency: "direct main"
+    description:
+      name: dartz
+      sha256: e6acf34ad2e31b1eb00948692468c30ab48ac8250e0f0df661e29f12dd252168
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.10.1"
   easy_localization:
     dependency: "direct main"
     description:
@@ -389,6 +397,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.3"
+  http:
+    dependency: "direct main"
+    description:
+      name: http
+      sha256: "5895291c13fa8a3bd82e76d5627f69e0d85ca6a30dcac95c4ea19a5d555879c2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.13.6"
   http_multi_server:
     dependency: transitive
     description:
@@ -453,6 +469,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  loggy:
+    dependency: "direct main"
+    description:
+      name: loggy
+      sha256: "981e03162bbd3a5a843026f75f73d26e4a0d8aa035ae060456ca7b30dfd1e339"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.3"
   matcher:
     dependency: transitive
     description:

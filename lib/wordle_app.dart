@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wordle_clone/core/navigation/app_router.dart';
 
+import 'package:wordle_clone/presentation/state_management/login_bloc/login_cubit.dart';
+
 final GlobalKey<ScaffoldMessengerState> materialAppKey =
 GlobalKey<ScaffoldMessengerState>();
 
@@ -13,7 +15,7 @@ class WordleApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-       // BlocProvider<LoginCubit>(create: (context) => LoginCubit()),
+        BlocProvider<LoginCubit>(create: (context) => LoginCubit()),
        // BlocProvider<StoreCubit>(create: (context) => StoreCubit()),
       ],
       child: MaterialApp.router(
