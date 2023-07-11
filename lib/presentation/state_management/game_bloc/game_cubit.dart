@@ -10,10 +10,27 @@ class GameCubit extends Cubit<GameState> {
 
   late int _numberOfLetters;
 
+  late int _guessesMade;
+
+  int get numberOfLetters => _numberOfLetters;
+
+  int get numbersOfGuesses => _numberOfLetters + 1;
+
+  int get guessesMade => _guessesMade;
+
   set numberOfLetters(int value) {
     ///only allowed length of words
     assert(value != 4 || value != 5 || value != 6);
     _numberOfLetters = value;
+  }
+
+  void _incrementGuessesMade() {
+    _guessesMade = _guessesMade += 1;
+  }
+
+  Future<void> guess(String word) async {
+    emit(GameInProgress());
+    _incrementGuessesMade();
   }
 
   final AuthUseCase _useCase = AuthUseCase();
