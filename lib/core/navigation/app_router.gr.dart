@@ -29,6 +29,12 @@ class _$AppRouter extends RootStackRouter {
         child: const MenuScreen(),
       );
     },
+    GameScreenRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const GameScreen(),
+      );
+    },
   };
 
   @override
@@ -46,6 +52,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           MenuScreenRoute.name,
           path: '/menu_screen',
+        ),
+        RouteConfig(
+          GameScreenRoute.name,
+          path: '/game_screen',
         ),
       ];
 }
@@ -72,4 +82,16 @@ class MenuScreenRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'MenuScreenRoute';
+}
+
+/// generated route for
+/// [GameScreen]
+class GameScreenRoute extends PageRouteInfo<void> {
+  const GameScreenRoute()
+      : super(
+          GameScreenRoute.name,
+          path: '/game_screen',
+        );
+
+  static const String name = 'GameScreenRoute';
 }

@@ -10,13 +10,13 @@ class LoginCubit extends Cubit<LoginState> {
 
   final AuthUseCase _useCase = AuthUseCase();
 
-  Future<void> googleLogin({
+  Future<void> emailPasswordLogin({
     required String email,
     required String password,
   }) async {
     emit(LoginInProgress());
 
-    final state = await _useCase.login(
+    final state = await _useCase.emailPasswordLogin(
       model: LoginEmailRequestModel(
         email: email,
         password: password,

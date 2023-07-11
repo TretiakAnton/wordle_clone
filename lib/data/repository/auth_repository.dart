@@ -9,9 +9,9 @@ import 'package:wordle_clone/data/entity/requests/auth/login_email_request.dart'
 class AuthRepository with RepoLoggy {
   final AuthDataSource _source = AuthDataSource();
 
-  Future<Either<ServerFailure, UserCredential>> login({required LoginEmailRequestEntity request}) async {
+  Future<Either<ServerFailure, UserCredential>> emailPasswordLogin({required LoginEmailRequestEntity request}) async {
     try {
-      final result = await _source.emailLogin(request: request);
+      final result = await _source.emailPasswordLogin(request: request);
       return Right(result);
     } on CustomException catch (e) {
       return Left(ServerFailure(errorMessage: e.message));

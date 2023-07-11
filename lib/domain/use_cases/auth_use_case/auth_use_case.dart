@@ -9,10 +9,11 @@ class AuthUseCase {
   final LoginEmailTranslator _translator = LoginEmailTranslator();
   User? _user;
 
-  Future<LoginState> login({required LoginEmailRequestModel model}) async {
+  Future<LoginState> emailPasswordLogin(
+      {required LoginEmailRequestModel model}) async {
     LoginState result = LoginInProgress();
     final entity = _translator.loginEmailRequestModelToEntity(model: model);
-    final response = await _repository.login(request: entity);
+    final response = await _repository.emailPasswordLogin(request: entity);
     response.fold((failure) {
       result = LoginFailed(failure.errorMessage);
     }, (register) {
