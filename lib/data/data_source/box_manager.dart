@@ -44,4 +44,16 @@ class BoxManager {
     }
     return true;
   }
+
+  Future<void> fill4LettersWords({required WordList words}) async {
+    return await words4LetterBox.put(hiveKey4Letters, words);
+  }
+
+  Future<void> fill5LettersWords({required WordList words}) async {
+    return await words5LetterBox.put(hiveKey5Letters, words);
+  }
+
+  Future<void> fill6LettersWords({required WordList words}) async {
+    return await words6LetterBox.put(hiveKey6Letters, words);
+  }
 }

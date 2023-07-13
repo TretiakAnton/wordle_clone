@@ -1,17 +1,16 @@
 import 'dart:async';
+import 'dart:core';
 
 import 'package:dartz/dartz.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:wordle_clone/core/networking/errors.dart';
 import 'package:wordle_clone/core/networking/exceptions.dart';
 import 'package:wordle_clone/core/networking/repo_loggy.dart';
-import 'package:wordle_clone/data/data_source/auth_data_source.dart';
 import 'package:wordle_clone/data/data_source/box_manager.dart';
 import 'package:wordle_clone/data/data_source/menu_data_source.dart';
-import 'package:wordle_clone/data/entity/requests/auth/login_email_request.dart';
 import 'package:wordle_clone/data/entity/requests/menu/word_refill_request.dart';
 import 'package:wordle_clone/data/entity/responses/check_words_response.dart';
+import 'package:wordle_clone/data/entity/responses/get_words_response.dart';
+import 'package:wordle_clone/data/entity/word_list.dart';
 
 class MenuRepository with RepoLoggy {
   final MenuDataSource _source = MenuDataSource();
@@ -35,15 +34,35 @@ class MenuRepository with RepoLoggy {
     }
   }
 
-  Future<Either<ServerFailure, void>> refillWords(
+  Future<Either<ServerFailure, Map<int, GetWordsResponse>>> refillWords(
       {required WordRefillRequest refillRequest}) async {
     try {
-      final result = await _source.refillWords(request: refillRequest);
-      return const Right(null);
+      final Map<int, GetWordsResponse> result =
+          await _source.refillWords(request: refillRequest);
+      return Right(result);
     } on CustomException catch (e) {
       return Left(
         ServerFailure(errorMessage: e.message),
       );
+    }
+  }
+
+  Future<void> setWordsList({
+    required int wordLength,
+    required WordList words,
+  }) async {
+    switch (wordLength) {
+      case 4:
+        await _boxManager.fill4LettersWords(words: words);
+        break;
+      case 5:
+        await _boxManager.fill5LettersWords(words: words);
+        break;
+      case 6:
+        await _boxManager.fill6LettersWords(words: words);
+        break;
+      default:
+        break;
     }
   }
 }
