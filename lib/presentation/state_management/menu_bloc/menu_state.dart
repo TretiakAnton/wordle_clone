@@ -9,6 +9,8 @@ class MenuInProgress extends MenuState {}
 
 class MenuCompleted extends MenuState {}
 
+class MenuLettersSelected extends MenuState {}
+
 class MenuFailed extends MenuState {
   final String? error;
 

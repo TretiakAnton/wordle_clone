@@ -12,7 +12,9 @@ class MenuDataSource {
 
   Future<Map<int, GetWordsResponse>> refillWords(
       {required WordRefillRequest request}) async {
-    return await compute(_performWordsRefill, request);
+    final Map<int, GetWordsResponse> result =
+        await compute(_performWordsRefill, request);
+    return result;
   }
 
   Future<Map<int, GetWordsResponse>> _performWordsRefill(
@@ -29,7 +31,8 @@ class MenuDataSource {
       lengthOfWordsToRefill.add(6);
     }
     for (int index = 0; index < lengthOfWordsToRefill.length; index++) {
-      final response = await http.get(Uri.parse('$_baseUrl&length=5'));
+      final response = await http
+          .get(Uri.parse('$_baseUrl&length=${lengthOfWordsToRefill[index]}'));
       final json = jsonDecode(response.body);
       result[lengthOfWordsToRefill[index]] = GetWordsResponse.fromJson(json);
     }

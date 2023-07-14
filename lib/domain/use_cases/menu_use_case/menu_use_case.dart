@@ -1,3 +1,4 @@
+import 'package:wordle_clone/data/entity/responses/check_words_response.dart';
 import 'package:wordle_clone/data/entity/responses/get_words_response.dart';
 import 'package:wordle_clone/data/repository/menu_repository.dart';
 import 'package:wordle_clone/domain/translator/menu_translator/menu_translator.dart';
@@ -10,23 +11,32 @@ class MenuUseCase {
   Future<MenuState> checkWords() async {
     MenuState result = MenuInitial();
     final response = await _repository.checkWords();
-    response.fold((failure) {
+    await response.fold((failure) async {
       return result = MenuFailed(failure.errorMessage);
     }, (checkWordResponse) async {
       if (checkWordResponse.is4LettersWordsEmpty ||
           checkWordResponse.is5LettersWordsEmpty ||
           checkWordResponse.is6LettersWordsEmpty) {
-        final refillRequest = _translator.checkWordResponseToWordsRefillRequest(
-            response: checkWordResponse);
-        final wordsResponse =
-            await _repository.refillWords(refillRequest: refillRequest);
-        wordsResponse.fold((failure) {
-          return result = MenuFailed(failure.errorMessage);
-        }, (wordsSource) async {
-          await _writeWordsToStorage(source: wordsSource);
-          result = MenuCompleted();
-        });
+        result = await _refillWords(checkWordResponse: checkWordResponse);
+      } else {
+        result = MenuCompleted();
       }
+    });
+    return result;
+  }
+
+  Future<MenuState> _refillWords(
+      {required CheckWordsResponse checkWordResponse}) async {
+    MenuState result = MenuInitial();
+    final refillRequest = _translator.checkWordResponseToWordsRefillRequest(
+        response: checkWordResponse);
+    final wordsResponse =
+        await _repository.refillWords(refillRequest: refillRequest);
+    await wordsResponse.fold((failure) async {
+      return result = MenuFailed(failure.errorMessage);
+    }, (wordsSource) async {
+      await _writeWordsToStorage(source: wordsSource);
+      result = MenuCompleted();
     });
     return result;
   }
