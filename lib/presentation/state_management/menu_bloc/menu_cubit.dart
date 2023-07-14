@@ -9,26 +9,24 @@ class MenuCubit extends Cubit<MenuState> {
     checkWords();
   }
 
+  final MenuUseCase _useCase = MenuUseCase();
+
   bool _isWordsLoaded = false;
 
-  int? _numberOfLetters;
-
-  int? get numberOfLetters => _numberOfLetters;
+  int? get numberOfLetters => _useCase.numberOfLetters;
 
   bool get isWordsLoaded => _isWordsLoaded;
 
   set numberOfLetters(int? value) {
     ///only allowed length of words
     assert(value == 4 || value == 5 || value == 6 || value == null);
-    _numberOfLetters = value;
+    _useCase.numberOfLetters = value;
     emit(MenuLettersSelected());
   }
 
   bool isSelected(int value) {
-    return value == _numberOfLetters;
+    return value == _useCase.numberOfLetters;
   }
-
-  final MenuUseCase _useCase = MenuUseCase();
 
   Future<void> checkWords() async {
     emit(MenuInProgress());

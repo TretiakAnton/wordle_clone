@@ -46,14 +46,36 @@ class BoxManager {
   }
 
   Future<void> fill4LettersWords({required WordList words}) async {
-    return await words4LetterBox.put(hiveKey4Letters, words);
+    return await words4LetterBox.put('words', words);
   }
 
   Future<void> fill5LettersWords({required WordList words}) async {
-    return await words5LetterBox.put(hiveKey5Letters, words);
+    return await words5LetterBox.put('words', words);
   }
 
   Future<void> fill6LettersWords({required WordList words}) async {
-    return await words6LetterBox.put(hiveKey6Letters, words);
+    return await words6LetterBox.put('words', words);
+  }
+
+  Future<String> getWord({required int length}) async {
+    String word = '';
+    Box box;
+    switch (length) {
+      case 4:
+        box = words4LetterBox;
+        break;
+      case 5:
+        box = words5LetterBox;
+        break;
+      case 6:
+        box = words6LetterBox;
+        break;
+      default:
+        box = words5LetterBox;
+    }
+    final WordList list = await box.get('words');
+    word = list.words.removeAt(0);
+    await box.put('words', list);
+    return word;
   }
 }

@@ -19,22 +19,18 @@ class LettersField extends StatelessWidget {
     super.key,
     required this.onChange,
     required this.defaultBoxSize,
-    defaultDecoration,
+    this.defaultDecoration,
     selectedBoxSize,
     this.codeLength = 5,
     this.textStyle,
-    this.margin = 16.0,
+    this.margin = 10.0,
     this.selectedDecoration,
     this.enabled = true,
     this.autoFocus = false,
     this.alignment = MainAxisAlignment.spaceBetween,
     textController,
   })  : textController = textController ?? TextEditingController(),
-        selectedBoxSize = selectedBoxSize ?? defaultBoxSize,
-        defaultDecoration = defaultDecoration ??
-            BoxDecoration(
-              border: Border.all(color: Colors.black),
-            );
+        selectedBoxSize = selectedBoxSize ?? defaultBoxSize;
 
   List<Widget> getField() {
     final List<Widget> result = <Widget>[];
@@ -52,12 +48,14 @@ class LettersField extends StatelessWidget {
                     child: Container(
                         height: defaultBoxSize,
                         width: defaultBoxSize,
-                        decoration: defaultDecoration),
+                        decoration: defaultDecoration ??
+                            textFieldDecoration(selected: false)),
                   )
                 : Container(),
             textController.text.length >= i
                 ? Container(
-                    decoration: selectedDecoration,
+                    decoration: selectedDecoration ??
+                        textFieldDecoration(selected: true),
                     width: selectedBoxSize,
                     height: selectedBoxSize,
                     child: Center(
@@ -123,6 +121,13 @@ class LettersField extends StatelessWidget {
         controller: textController,
         onChanged: onChange,
       ),
+    );
+  }
+
+  BoxDecoration textFieldDecoration({required bool selected}) {
+    return BoxDecoration(
+      border: Border.all(color: selected ? Colors.black : Colors.grey),
+      borderRadius: BorderRadius.circular(10.0),
     );
   }
 }

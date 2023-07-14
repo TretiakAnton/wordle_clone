@@ -82,9 +82,17 @@ class MenuScreen extends StatelessWidget {
                               child: bloc.isWordsLoaded
                                   ? const Text('Start')
                                   : Row(
-                                      children: const [
-                                        Text('Wait until game is loaded'),
-                                        CircularProgressIndicator(),
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        const Text('Wait until game is loaded'),
+                                        SizedBox(
+                                          width: horizontalPadding(
+                                              context: context, pixels: 10),
+                                        ),
+                                        const SizedBox(
+                                          height: 20,
+                                          child: CircularProgressIndicator(),
+                                        ),
                                       ],
                                     ),
                             ),

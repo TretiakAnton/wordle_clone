@@ -7,6 +7,15 @@ import 'package:wordle_clone/presentation/state_management/menu_bloc/menu_cubit.
 class MenuUseCase {
   final MenuRepository _repository = MenuRepository();
   final MenuTranslator _translator = MenuTranslator();
+  int? _numberOfLetters;
+
+  int? get numberOfLetters => _numberOfLetters;
+
+  set numberOfLetters(int? value) {
+    ///only allowed length of words
+    assert(value == 4 || value == 5 || value == 6 || value == null);
+    _numberOfLetters = value;
+  }
 
   Future<MenuState> checkWords() async {
     MenuState result = MenuInitial();
