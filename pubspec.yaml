@@ -19,6 +19,7 @@ dependencies:
   firebase_auth: ^3.6.1
   firebase_core_platform_interface: 4.5.1
   firebase_messaging: ^13.0.4
+  cloud_firestore: ^4.8.3
 
   auto_route: ^5.0.4
   easy_localization: ^3.0.1

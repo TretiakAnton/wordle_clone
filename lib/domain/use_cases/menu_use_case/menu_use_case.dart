@@ -9,6 +9,14 @@ class MenuUseCase {
   final MenuTranslator _translator = MenuTranslator();
   int? _numberOfLetters;
 
+  static final MenuUseCase _instance = MenuUseCase._internal();
+
+  factory MenuUseCase() {
+    return _instance;
+  }
+
+  MenuUseCase._internal();
+
   int? get numberOfLetters => _numberOfLetters;
 
   set numberOfLetters(int? value) {

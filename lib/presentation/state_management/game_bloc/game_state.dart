@@ -5,9 +5,9 @@ abstract class GameState {}
 
 class GameInitial extends GameState {}
 
-class GameInProgress extends GameState {}
+class GameLoading extends GameState {}
 
-class GameCompleted extends GameState {}
+class GameReady extends GameState {}
 
 class GameGuessMade extends GameState {}
 

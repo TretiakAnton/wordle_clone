@@ -6,10 +6,13 @@ import 'package:wordle_clone/domain/use_cases/game_use_case/game_use_case.dart';
 part 'game_state.dart';
 
 class GameCubit extends Cubit<GameState> {
-  GameCubit() : super(GameInitial());
+  GameCubit() : super(GameInitial()) {
+    _getSecretWord();
+  }
+
   final GameUseCase _useCase = GameUseCase();
 
-  final GuessesResult _result = GuessesResult();
+  GuessesResult get guessesResult => _useCase.result;
 
   int _guessesMade = 0;
 
@@ -20,12 +23,19 @@ class GameCubit extends Cubit<GameState> {
   }
 
   void guess(String word) async {
-    emit(GameInProgress());
+    emit(GameLoading());
     final guessResult = _useCase.makeGuess(guess: word);
-    if (guessResult.isNotEmpty) {
-      _result.addResult(guessResult);
+    if (guessResult) {
       _incrementGuessesMade();
       emit(GameGuessMade());
+    } else {
+      emit(GameFailed('error'));
     }
+  }
+
+  Future<void> _getSecretWord() async {
+    emit(GameLoading());
+    await _useCase.getSecretWord();
+    emit(GameReady());
   }
 }

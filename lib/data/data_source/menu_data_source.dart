@@ -5,7 +5,7 @@ import 'package:wordle_clone/data/entity/requests/menu/word_refill_request.dart'
 import 'package:http/http.dart' as http;
 import 'package:wordle_clone/data/entity/responses/get_words_response.dart';
 
-//TODO move to https://api.wordnik.com/v4/words.json/randomWords
+// TODO move to https://api.wordnik.com/v4/words.json/randomWords
 class MenuDataSource {
   final String _baseUrl =
       'https://random-word-api.herokuapp.com/word?number=100';

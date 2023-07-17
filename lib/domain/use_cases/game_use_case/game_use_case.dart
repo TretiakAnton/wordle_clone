@@ -1,20 +1,26 @@
 import 'package:wordle_clone/data/repository/game_repository.dart';
-import 'package:wordle_clone/domain/model/guess_options.dart';
+import 'package:wordle_clone/domain/model/guesses_result.dart';
 import 'package:wordle_clone/domain/use_cases/menu_use_case/menu_use_case.dart';
 
 class GameUseCase {
-  GameUseCase() {
-    getSecretWord(length: MenuUseCase().numberOfLetters!);
-  }
-
   final GameRepository _repository = GameRepository();
-  final String secretWord = '';
+  String _secretWord = '';
+  final GuessesResult result = GuessesResult();
 
-  List<GuessOptions> makeGuess({required String guess}) {
-    return _repository.makeGuess(guess: guess, secretWord: secretWord);
+  bool makeGuess({required String guess}) {
+    bool isSuccess = false;
+    final guessResult =
+        _repository.makeGuess(guess: guess, secretWord: _secretWord);
+    if (guessResult.isNotEmpty) {
+      result.addResult(guessResult);
+      isSuccess = true;
+    }
+    return isSuccess;
   }
 
-  Future<void> getSecretWord({required int length}) async {
-    await _repository.getSecretWord(length: length);
+  Future<void> getSecretWord() async {
+    final word =
+        await _repository.getSecretWord(length: MenuUseCase().numberOfLetters!);
+    _secretWord = word;
   }
 }

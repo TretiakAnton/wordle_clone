@@ -52,6 +52,9 @@ class _GameScreenState extends State<GameScreen> {
                           onChange: (String word) => setState(() {
                             _wordGuess = word;
                           }),
+                          guesses: gameBloc.guessesResult.result.length > index
+                              ? gameBloc.guessesResult.result[index]
+                              : null,
                         ),
                       );
                     },

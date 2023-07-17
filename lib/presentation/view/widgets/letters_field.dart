@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:wordle_clone/domain/model/guess_options.dart';
 
 class LettersField extends StatelessWidget {
   final Function(String) onChange;
@@ -14,11 +15,13 @@ class LettersField extends StatelessWidget {
   final bool autoFocus;
   final MainAxisAlignment alignment;
   final TextEditingController textController;
+  final List<GuessOptions>? guesses;
 
   LettersField({
     super.key,
     required this.onChange,
     required this.defaultBoxSize,
+    required this.guesses,
     this.defaultDecoration,
     selectedBoxSize,
     this.codeLength = 5,
@@ -49,13 +52,15 @@ class LettersField extends StatelessWidget {
                         height: defaultBoxSize,
                         width: defaultBoxSize,
                         decoration: defaultDecoration ??
-                            textFieldDecoration(selected: false)),
+                            textFieldDecoration(
+                                selected: false, guessResult: guesses?[i - 1])),
                   )
                 : Container(),
             textController.text.length >= i
                 ? Container(
                     decoration: selectedDecoration ??
-                        textFieldDecoration(selected: true),
+                        textFieldDecoration(
+                            selected: true, guessResult: guesses?[i - 1]),
                     width: selectedBoxSize,
                     height: selectedBoxSize,
                     child: Center(
@@ -124,10 +129,24 @@ class LettersField extends StatelessWidget {
     );
   }
 
-  BoxDecoration textFieldDecoration({required bool selected}) {
+  BoxDecoration textFieldDecoration(
+      {required bool selected, required GuessOptions? guessResult}) {
     return BoxDecoration(
       border: Border.all(color: selected ? Colors.black : Colors.grey),
       borderRadius: BorderRadius.circular(10.0),
+      color: _chooseBackgroundColor(guessResult: guessResult),
     );
+  }
+
+  Color _chooseBackgroundColor({required GuessOptions? guessResult}) {
+    if (guessResult == null) {
+      return Colors.white;
+    } else if (guessResult == GuessOptions.rightLetterRightPosition) {
+      return Colors.green;
+    } else if (guessResult == GuessOptions.rightLetterWrongPosition) {
+      return Colors.yellow;
+    } else {
+      return Colors.grey;
+    }
   }
 }
