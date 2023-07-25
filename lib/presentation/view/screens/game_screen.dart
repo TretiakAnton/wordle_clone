@@ -95,7 +95,7 @@ class _GameContentState extends State<_GameContent> {
                   return Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: horizontalPadding(context: context, pixels: 15),
-                      vertical: verticalPadding(context: context, pixels: 0),
+                      vertical: verticalPadding(context: context, pixels: 10),
                     ),
                     child: LettersField(
                       codeLength: bloc.numberOfLetters,

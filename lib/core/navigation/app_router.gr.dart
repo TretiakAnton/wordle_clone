@@ -23,6 +23,12 @@ class _$AppRouter extends RootStackRouter {
         child: const LoginScreen(),
       );
     },
+    RegistrationScreenRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const RegistrationScreen(),
+      );
+    },
     MenuScreenRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
@@ -50,6 +56,10 @@ class _$AppRouter extends RootStackRouter {
           path: '/login_screen',
         ),
         RouteConfig(
+          RegistrationScreenRoute.name,
+          path: '/registration_screen',
+        ),
+        RouteConfig(
           MenuScreenRoute.name,
           path: '/menu_screen',
         ),
@@ -70,6 +80,18 @@ class LoginScreenRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'LoginScreenRoute';
+}
+
+/// generated route for
+/// [RegistrationScreen]
+class RegistrationScreenRoute extends PageRouteInfo<void> {
+  const RegistrationScreenRoute()
+      : super(
+          RegistrationScreenRoute.name,
+          path: '/registration_screen',
+        );
+
+  static const String name = 'RegistrationScreenRoute';
 }
 
 /// generated route for
