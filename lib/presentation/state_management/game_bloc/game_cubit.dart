@@ -68,5 +68,6 @@ class GameCubit extends Cubit<GameState> {
   void clean(BuildContext context) {
     _useCase.cleanWord();
     context.read<MenuCubit>().numberOfLetters = null;
+    context.read<MenuCubit>().checkWords();
   }
 }

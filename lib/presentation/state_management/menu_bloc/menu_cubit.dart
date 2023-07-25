@@ -30,6 +30,7 @@ class MenuCubit extends Cubit<MenuState> {
 
   Future<void> checkWords() async {
     emit(MenuInProgress());
+    _isWordsLoaded = false;
     final MenuState result = await _useCase.checkWords();
     if (result is MenuCompleted) {
       _isWordsLoaded = true;

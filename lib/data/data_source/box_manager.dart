@@ -46,15 +46,15 @@ class BoxManager {
   }
 
   Future<void> fill4LettersWords({required WordList words}) async {
-    return await words4LetterBox.put('words', words);
+    return await words4LetterBox.put(key, words);
   }
 
   Future<void> fill5LettersWords({required WordList words}) async {
-    return await words5LetterBox.put('words', words);
+    return await words5LetterBox.put(key, words);
   }
 
   Future<void> fill6LettersWords({required WordList words}) async {
-    return await words6LetterBox.put('words', words);
+    return await words6LetterBox.put(key, words);
   }
 
   Future<String> getWord({required int length}) async {
@@ -73,9 +73,9 @@ class BoxManager {
       default:
         box = words5LetterBox;
     }
-    final WordList list = await box.get('words');
+    final WordList list = await box.get(key);
     word = list.words.removeAt(0);
-    await box.put('words', list);
+    await box.put(key, list);
     return word;
   }
 }
