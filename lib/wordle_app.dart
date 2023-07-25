@@ -5,6 +5,7 @@ import 'package:wordle_clone/presentation/state_management/game_bloc/game_cubit.
 
 import 'package:wordle_clone/presentation/state_management/login_bloc/login_cubit.dart';
 import 'package:wordle_clone/presentation/state_management/menu_bloc/menu_cubit.dart';
+import 'package:wordle_clone/presentation/state_management/registration_screen/registration_cubit.dart';
 
 final GlobalKey<ScaffoldMessengerState> materialAppKey =
     GlobalKey<ScaffoldMessengerState>();
@@ -18,6 +19,7 @@ class WordleApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<LoginCubit>(create: (context) => LoginCubit()),
+        BlocProvider<RegistrationCubit>(create: (context) => RegistrationCubit()),
         BlocProvider<MenuCubit>(create: (context) => MenuCubit()),
         BlocProvider<GameCubit>(create: (context) => GameCubit()),
       ],

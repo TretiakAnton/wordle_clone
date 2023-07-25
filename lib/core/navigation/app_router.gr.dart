@@ -18,9 +18,11 @@ class _$AppRouter extends RootStackRouter {
   @override
   final Map<String, PageFactory> pagesMap = {
     LoginScreenRoute.name: (routeData) {
+      final args = routeData.argsAs<LoginScreenRouteArgs>(
+          orElse: () => const LoginScreenRouteArgs());
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const LoginScreen(),
+        child: LoginScreen(key: args.key),
       );
     },
     RegistrationScreenRoute.name: (routeData) {
@@ -72,14 +74,26 @@ class _$AppRouter extends RootStackRouter {
 
 /// generated route for
 /// [LoginScreen]
-class LoginScreenRoute extends PageRouteInfo<void> {
-  const LoginScreenRoute()
+class LoginScreenRoute extends PageRouteInfo<LoginScreenRouteArgs> {
+  LoginScreenRoute({Key? key})
       : super(
           LoginScreenRoute.name,
           path: '/login_screen',
+          args: LoginScreenRouteArgs(key: key),
         );
 
   static const String name = 'LoginScreenRoute';
+}
+
+class LoginScreenRouteArgs {
+  const LoginScreenRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'LoginScreenRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for

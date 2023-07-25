@@ -14,8 +14,12 @@ class AuthRepository with RepoLoggy {
     try {
       final result = await _source.emailPasswordLogin(request: request);
       return Right(result);
+    } on FirebaseAuthException catch (e) {
+      return Left(ServerFailure(errorMessage: e.message));
     } on CustomException catch (e) {
       return Left(ServerFailure(errorMessage: e.message));
+    } catch (e) {
+      return Left(ServerFailure(errorMessage: 'An unknown error occurred'));
     }
   }
 
@@ -24,8 +28,12 @@ class AuthRepository with RepoLoggy {
     try {
       final result = await _source.emailPasswordRegister(request: request);
       return Right(result);
+    } on FirebaseAuthException catch (e) {
+      return Left(ServerFailure(errorMessage: e.message));
     } on CustomException catch (e) {
       return Left(ServerFailure(errorMessage: e.message));
+    } catch (e) {
+      return Left(ServerFailure(errorMessage: 'An unknown error occurred'));
     }
   }
 }
