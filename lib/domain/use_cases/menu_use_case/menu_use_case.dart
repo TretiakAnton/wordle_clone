@@ -62,10 +62,11 @@ class MenuUseCase {
       {required Map<int, GetWordsResponse> source}) async {
     for (int index = 4; index <= 6; index++) {
       if (source.keys.contains(index)) {
+        final GetWordsResponse filteredWords = _translator.filterWordsResponse( source[index]!);
         await _repository.setWordsList(
           wordLength: index,
           words:
-              _translator.getWordsResponseToWordList(response: source[index]!),
+              _translator.getWordsResponseToWordList(response:filteredWords),
         );
       }
     }

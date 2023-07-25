@@ -4,8 +4,9 @@ class GetWordsResponse {
   GetWordsResponse({required this.words});
 
   factory GetWordsResponse.fromJson(List<dynamic> json) {
-    final List<String> words = List<String>.from(json);
-    return GetWordsResponse(words: words);
+    return GetWordsResponse(
+      words: json.map((word) => word['word'].toString()).toList(),
+    );
   }
 
   Map<String, dynamic> toJson() {

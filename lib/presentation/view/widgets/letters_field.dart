@@ -38,42 +38,40 @@ class LettersField extends StatelessWidget {
   List<Widget> getField() {
     final List<Widget> result = <Widget>[];
     for (int i = 1; i <= codeLength; i++) {
-      result.add(Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: margin,
-        ),
-        child: Stack(
-          alignment: Alignment.center,
-          children: <Widget>[
-            textController.text.length <= i - 1
-                ? Align(
-                    alignment: Alignment.center,
-                    child: Container(
-                        height: defaultBoxSize,
-                        width: defaultBoxSize,
-                        decoration: defaultDecoration ??
-                            textFieldDecoration(
-                                selected: false, guessResult: guesses?[i - 1])),
-                  )
-                : Container(),
-            textController.text.length >= i
-                ? Container(
-                    decoration: selectedDecoration ??
-                        textFieldDecoration(
-                            selected: true, guessResult: guesses?[i - 1]),
-                    width: selectedBoxSize,
-                    height: selectedBoxSize,
-                    child: Center(
-                      child: Text(
-                        textController.text[i - 1],
-                        style: textStyle,
+      result.add(
+        Flexible(
+          fit: FlexFit.loose,
+          child: Stack(
+            alignment: Alignment.center,
+            children: <Widget>[
+              textController.text.length <= i - 1
+                  ? Align(
+                      alignment: Alignment.center,
+                      child: Container(
+                          height: defaultBoxSize,
+                          width: defaultBoxSize,
+                          decoration:
+                              defaultDecoration ?? textFieldDecoration(selected: false, guessResult: guesses?[i - 1])),
+                    )
+                  : Container(),
+              textController.text.length >= i
+                  ? Container(
+                      decoration:
+                          selectedDecoration ?? textFieldDecoration(selected: true, guessResult: guesses?[i - 1]),
+                      width: selectedBoxSize,
+                      height: selectedBoxSize,
+                      child: Center(
+                        child: Text(
+                          textController.text[i - 1],
+                          style: textStyle,
+                        ),
                       ),
-                    ),
-                  )
-                : Container(),
-          ],
+                    )
+                  : Container(),
+            ],
+          ),
         ),
-      ));
+      );
     }
     return result;
   }
@@ -85,9 +83,7 @@ class LettersField extends StatelessWidget {
         children: [
           SizedBox(
             width: MediaQuery.of(context).size.width,
-            height: defaultBoxSize >= selectedBoxSize
-                ? defaultBoxSize
-                : selectedBoxSize,
+            height: defaultBoxSize >= selectedBoxSize ? defaultBoxSize : selectedBoxSize,
             child: Row(
               mainAxisAlignment: alignment,
               children: getField(),
@@ -119,9 +115,7 @@ class LettersField extends StatelessWidget {
               borderSide: BorderSide.none,
             ),
             filled: true),
-        inputFormatters: <TextInputFormatter>[
-          FilteringTextInputFormatter.allow(RegExp(r'^[a-z]+$'))
-        ],
+        inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'^[a-z]+$'))],
         keyboardType: TextInputType.text,
         controller: textController,
         onChanged: onChange,
@@ -129,8 +123,7 @@ class LettersField extends StatelessWidget {
     );
   }
 
-  BoxDecoration textFieldDecoration(
-      {required bool selected, required GuessOptions? guessResult}) {
+  BoxDecoration textFieldDecoration({required bool selected, required GuessOptions? guessResult}) {
     return BoxDecoration(
       border: Border.all(color: selected ? Colors.black : Colors.grey),
       borderRadius: BorderRadius.circular(10.0),
