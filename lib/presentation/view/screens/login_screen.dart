@@ -25,7 +25,7 @@ class _LoginScreenState extends State<LoginScreen> {
       listener: (context, state) {
         if (state is LoginCompleted) {
           WidgetsBinding.instance.addPostFrameCallback(
-              (_) => context.router.pushNamed(Routes.menuScreen));
+              (_) => context.router.replaceNamed(Routes.menuScreen));
         }
       },
       child: SafeArea(

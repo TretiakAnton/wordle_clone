@@ -35,9 +35,7 @@ class MenuScreen extends StatelessWidget {
                               bloc.numberOfLetters = 4;
                             },
                             style: OutlinedButton.styleFrom(
-                                backgroundColor: bloc.isSelected(4)
-                                    ? Colors.blue
-                                    : Colors.grey),
+                                backgroundColor: bloc.isSelected(4) ? Colors.blue : Colors.grey),
                             child: const Text('4 letters'),
                           ),
                           SizedBox(
@@ -49,9 +47,7 @@ class MenuScreen extends StatelessWidget {
                           OutlinedButton(
                             onPressed: () => bloc.numberOfLetters = 5,
                             style: OutlinedButton.styleFrom(
-                                backgroundColor: bloc.isSelected(5)
-                                    ? Colors.blue
-                                    : Colors.grey),
+                                backgroundColor: bloc.isSelected(5) ? Colors.blue : Colors.grey),
                             child: const Text('5 letters'),
                           ),
                           SizedBox(
@@ -63,16 +59,12 @@ class MenuScreen extends StatelessWidget {
                           OutlinedButton(
                             onPressed: () => bloc.numberOfLetters = 6,
                             style: OutlinedButton.styleFrom(
-                                backgroundColor: bloc.isSelected(6)
-                                    ? Colors.blue
-                                    : Colors.grey),
+                                backgroundColor: bloc.isSelected(6) ? Colors.blue : Colors.grey),
                             child: const Text('6 letters'),
                           ),
                           const Spacer(),
                           Visibility(
-                            visible: (bloc.isSelected(4) ||
-                                bloc.isSelected(5) ||
-                                bloc.isSelected(6)),
+                            visible: (bloc.isSelected(4) || bloc.isSelected(5) || bloc.isSelected(6)),
                             child: OutlinedButton(
                               onPressed: () {
                                 if (bloc.isWordsLoaded) {
@@ -86,8 +78,7 @@ class MenuScreen extends StatelessWidget {
                                       children: [
                                         const Text('Wait until game is loaded'),
                                         SizedBox(
-                                          width: horizontalPadding(
-                                              context: context, pixels: 10),
+                                          width: horizontalPadding(context: context, pixels: 10),
                                         ),
                                         const SizedBox(
                                           height: 20,

@@ -11,6 +11,18 @@ class GameReady extends GameState {}
 
 class GameGuessMade extends GameState {}
 
+class GameLoose extends GameState {
+  final GameResult result;
+
+  GameLoose(this.result);
+}
+
+class GameWin extends GameState {
+  final GameResult result;
+
+  GameWin(this.result);
+}
+
 class GameFailed extends GameState {
   final String? error;
 

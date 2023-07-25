@@ -4,6 +4,10 @@ class GuessesResult {
   List<List<GuessOptions>?> result = [];
 
   addResult(List<GuessOptions> newResult) {
-    result?.add(newResult);
+    result.add(newResult);
+  }
+
+  clear() {
+    result.clear();
   }
 }
