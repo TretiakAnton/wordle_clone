@@ -129,6 +129,6 @@ class _GameContentState extends State<_GameContent> {
 
   void _onExit() {
     widget.bloc.clean(context);
-    context.router.popUntil((route) => route.isFirst);
+    context.router.popUntilRoot();
   }
 }
