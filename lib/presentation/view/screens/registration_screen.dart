@@ -3,78 +3,75 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wordle_clone/core/constants.dart';
 import 'package:wordle_clone/core/navigation/app_router.dart';
-import 'package:wordle_clone/core/navigation/routes.dart';
 import 'package:wordle_clone/presentation/state_management/registration_screen/registration_cubit.dart';
 
-class RegistrationScreen extends StatefulWidget {
-  const RegistrationScreen({Key? key}) : super(key: key);
+class RegistrationScreen extends StatelessWidget {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
-  @override
-  State<RegistrationScreen> createState() => _RegistrationScreenState();
-}
-
-class _RegistrationScreenState extends State<RegistrationScreen> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  RegistrationScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<RegistrationCubit>();
-    return BlocListener<RegistrationCubit, RegistrationState>(
+    return BlocConsumer<RegistrationCubit, RegistrationState>(
       listener: (context, state) {
         if (state is RegistrationCompleted) {
           WidgetsBinding.instance.addPostFrameCallback(
             (_) => context.router.pushAndPopUntil(
               const MenuScreenRoute(),
-              predicate: (route) =>route.isFirst,
+              predicate: (route) => route.isFirst,
             ),
           );
         }
       },
-      child: SafeArea(
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: Padding(
-            padding: EdgeInsets.symmetric(
-              horizontal: horizontalPadding(context: context, pixels: 20),
-              vertical: verticalPadding(context: context, pixels: 20),
-            ),
-            child: Column(
-              children: [
-                const Spacer(),
-                TextFormField(
-                  controller: emailController,
-                ),
-                SizedBox(
-                  height: verticalPadding(
-                    context: context,
-                    pixels: 20,
+      builder: (context, state) {
+        return SafeArea(
+          child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            body: Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: horizontalPadding(context: context, pixels: 20),
+                vertical: verticalPadding(context: context, pixels: 20),
+              ),
+              child: Column(
+                children: [
+                  const Spacer(),
+                  TextFormField(
+                    controller: emailController,
                   ),
-                ),
-                TextFormField(
-                  controller: passwordController,
-                ),
-                SizedBox(
-                  height: verticalPadding(
-                    context: context,
-                    pixels: 40,
+                  SizedBox(
+                    height: verticalPadding(
+                      context: context,
+                      pixels: 20,
+                    ),
                   ),
-                ),
-                OutlinedButton(
-                  onPressed: () {
-                    bloc.emailPasswordLogin(
-                      email: emailController.text,
-                      password: passwordController.text,
-                    );
-                  },
-                  child: const Text('Register'),
-                ),
-                const Spacer(),
-              ],
+                  TextFormField(
+                    controller: passwordController,
+                  ),
+                  SizedBox(
+                    height: verticalPadding(
+                      context: context,
+                      pixels: 40,
+                    ),
+                  ),
+                  OutlinedButton(
+                    onPressed: () async {
+                      FocusScope.of(context).unfocus();
+                      await bloc.emailPasswordLogin(
+                        email: emailController.text,
+                        password: passwordController.text,
+                      );
+                    },
+                    child: state is RegistrationInProgress ? const CircularProgressIndicator() : const Text('Register'),
+                  ),
+                  const Spacer(),
+                ],
+              ),
             ),
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 }

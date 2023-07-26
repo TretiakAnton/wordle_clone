@@ -14,14 +14,16 @@ class LoginCubit extends Cubit<LoginState> {
     required String email,
     required String password,
   }) async {
+    if (state is LoginInProgress) {
+      return;
+    }
     emit(LoginInProgress());
-
-    final state = await _useCase.emailPasswordLogin(
+    final resultState = await _useCase.emailPasswordLogin(
       model: EmailPasswordRequestModel(
         email: email,
         password: password,
       ),
     );
-    emit(state);
+    emit(resultState);
   }
 }

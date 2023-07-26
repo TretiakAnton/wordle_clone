@@ -52,8 +52,9 @@ class LoginScreen extends StatelessWidget {
                     ),
                   ),
                   OutlinedButton(
-                    onPressed: () {
-                      bloc.emailPasswordLogin(
+                    onPressed: () async {
+                      FocusScope.of(context).unfocus();
+                      await bloc.emailPasswordLogin(
                         email: emailController.text,
                         password: passwordController.text,
                       );

@@ -26,9 +26,11 @@ class _$AppRouter extends RootStackRouter {
       );
     },
     RegistrationScreenRoute.name: (routeData) {
+      final args = routeData.argsAs<RegistrationScreenRouteArgs>(
+          orElse: () => const RegistrationScreenRouteArgs());
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const RegistrationScreen(),
+        child: RegistrationScreen(key: args.key),
       );
     },
     MenuScreenRoute.name: (routeData) {
@@ -98,14 +100,27 @@ class LoginScreenRouteArgs {
 
 /// generated route for
 /// [RegistrationScreen]
-class RegistrationScreenRoute extends PageRouteInfo<void> {
-  const RegistrationScreenRoute()
+class RegistrationScreenRoute
+    extends PageRouteInfo<RegistrationScreenRouteArgs> {
+  RegistrationScreenRoute({Key? key})
       : super(
           RegistrationScreenRoute.name,
           path: '/registration_screen',
+          args: RegistrationScreenRouteArgs(key: key),
         );
 
   static const String name = 'RegistrationScreenRoute';
+}
+
+class RegistrationScreenRouteArgs {
+  const RegistrationScreenRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'RegistrationScreenRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for

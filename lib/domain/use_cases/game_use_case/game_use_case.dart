@@ -42,7 +42,6 @@ class GameUseCase {
   Future<void> getSecretWord() async {
     secretWord = '';
     final word = await _repository.getSecretWord(length: MenuUseCase().numberOfLetters!);
-    // MenuUseCase().numberOfLetters = null;
     secretWord = word;
   }
 
