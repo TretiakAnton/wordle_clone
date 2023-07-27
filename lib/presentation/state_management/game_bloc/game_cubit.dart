@@ -31,10 +31,10 @@ class GameCubit extends Cubit<GameState> {
     final guessResult = _useCase.makeGuess(guess: word);
     if (guessResult) {
       _incrementGuessesMade();
-      bool? gameResult = _useCase.checkWinOrLoose(_guessesMade);
-      if (gameResult == null) {
+      bool? gameResultIsWin = _useCase.checkWinOrLoose(_guessesMade);
+      if (gameResultIsWin == null) {
         emit(GameGuessMade());
-      } else if (gameResult) {
+      } else if (gameResultIsWin) {
         emit(
           GameWin(
             GameResult(

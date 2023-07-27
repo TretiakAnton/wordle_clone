@@ -10,7 +10,7 @@ class GameUseCase {
 
   bool makeGuess({required String guess}) {
     bool isSuccess = false;
-    final guessResult = _repository.makeGuess(guess: guess, secretWord: secretWord??'');
+    final guessResult = _repository.makeGuess(guess: guess, secretWord: secretWord ?? '');
     if (guessResult.isNotEmpty) {
       result.addResult(guessResult);
       isSuccess = true;
@@ -41,7 +41,8 @@ class GameUseCase {
 
   Future<void> getSecretWord() async {
     secretWord = '';
-    final word = await _repository.getSecretWord(length: MenuUseCase().numberOfLetters!);
+    //TODO do localization
+    final word = await _repository.getSecretWord(length: MenuUseCase().numberOfLetters!, isEn: true);
     secretWord = word;
   }
 

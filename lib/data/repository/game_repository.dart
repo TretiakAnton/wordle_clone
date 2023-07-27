@@ -5,8 +5,7 @@ import 'package:wordle_clone/domain/model/guess_options.dart';
 class GameRepository with RepoLoggy {
   final BoxManager _boxManager = BoxManager();
 
-  List<GuessOptions> makeGuess(
-      {required String guess, required String secretWord}) {
+  List<GuessOptions> makeGuess({required String guess, required String secretWord}) {
     List<GuessOptions> results = [];
     for (int i = 0; i < guess.length; i++) {
       if (guess[i] == secretWord[i]) {
@@ -20,7 +19,10 @@ class GameRepository with RepoLoggy {
     return results;
   }
 
-  Future<String> getSecretWord({required int length}) async {
-    return await _boxManager.getWord(length: length);
+  Future<String> getSecretWord({required int length, required bool isEn}) async {
+    return await _boxManager.getWord(
+      length: length,
+      isEn: isEn,
+    );
   }
 }

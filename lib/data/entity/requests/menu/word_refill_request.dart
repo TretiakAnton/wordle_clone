@@ -1,11 +1,9 @@
 class WordRefillRequest {
-  final bool is4letterWordsNeedRefill;
-  final bool is5letterWordsNeedRefill;
-  final bool is6letterWordsNeedRefill;
+  final bool isEn;
+  final int wordLength;
 
   WordRefillRequest({
-    required this.is4letterWordsNeedRefill,
-    required this.is5letterWordsNeedRefill,
-    required this.is6letterWordsNeedRefill,
+    required this.isEn,
+    required this.wordLength,
   });
 }

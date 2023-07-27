@@ -1,37 +1,88 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:wordle_clone/data/entity/requests/menu/word_refill_request.dart';
 import 'package:http/http.dart' as http;
 import 'package:wordle_clone/data/entity/responses/get_words_response.dart';
 
 class MenuDataSource {
-  final String _baseUrl =
-      'https://api.wordnik.com/v4/words.json/randomWords?api_key=w01qji5soq8nxk76xt4033rteyol99vuqd01uqngotia83wi0&partOfSpeech=noun&hasExamples=true';
+  final _amount = 30;
 
-  Future<Map<int, GetWordsResponse>> refillWords({required WordRefillRequest request}) async {
-    final Map<int, GetWordsResponse> result = await compute(_performWordsRefill, request);
+  final String _baseUrl =
+      'https://api.wordnik.com/v4/words.json/randomWords?api_key=w01qji5soq8nxk76xt4033rteyol99vuqd01uqngotia83wi0&partOfSpeech=noun&hasExamples=true&hasDictionaryDef=true&isStrict=true';
+
+  Future<GetWordsResponse> refillWords({required List<WordRefillRequest> requests}) async {
+    final GetWordsResponse result = GetWordsResponse();
+    if (requests.any((element) => element.isEn)) {
+      final enWords = await compute(_refillEnWords, requests);
+      result.enWords = enWords;
+    }
+    if (requests.any((element) => !element.isEn)) {
+      final uaWords = await compute(_refillUaWords, requests);
+      result.uaWords = uaWords;
+    }
     return result;
   }
 
-  Future<Map<int, GetWordsResponse>> _performWordsRefill(WordRefillRequest request) async {
-    Map<int, GetWordsResponse> result = {};
+  Future<Map<int, List<String>>> _refillEnWords(List<WordRefillRequest> request) async {
+    Map<int, List<String>> result = {};
     List<int> lengthOfWordsToRefill = [];
-    if (request.is4letterWordsNeedRefill) {
+    if (request.any((element) => element.wordLength == 4)) {
       lengthOfWordsToRefill.add(4);
     }
-    if (request.is5letterWordsNeedRefill) {
+    if (request.any((element) => element.wordLength == 5)) {
       lengthOfWordsToRefill.add(5);
     }
-    if (request.is6letterWordsNeedRefill) {
+    if (request.any((element) => element.wordLength == 6)) {
       lengthOfWordsToRefill.add(6);
     }
     for (int index = 0; index < lengthOfWordsToRefill.length; index++) {
       final length = lengthOfWordsToRefill[index];
-      const amount = 30;
-      final response = await http.get(Uri.parse('$_baseUrl&minLength=$length&maxLength=$length&limit=$amount'));
-      final json = jsonDecode(response.body);
-      result[lengthOfWordsToRefill[index]] = GetWordsResponse.fromJson(json);
+      final response = await http.get(Uri.parse('$_baseUrl&minLength=$length&maxLength=$length&limit=$_amount'));
+      final words = _parseEnFromJson(response);
+      result[lengthOfWordsToRefill[index]] = words;
+    }
+    return result;
+  }
+
+  List<String> _parseEnFromJson(http.Response response) {
+    List<String> wordsList = [];
+    List<dynamic> jsonList = jsonDecode(response.body);
+    for (var item in jsonList) {
+      String word = item['word'];
+      wordsList.add(word);
+    }
+    return wordsList;
+  }
+
+  Future<Map<int, List<String>>> _refillUaWords(List<WordRefillRequest> request) async {
+    final db = FirebaseFirestore.instance;
+    Map<int, List<String>> result = {};
+    Map<int, String> keys = {
+      4: 'word4letters',
+      5: 'word5letters',
+      6: 'word6letters',
+    };
+    List<int> lengthOfWordsToRefill = [];
+    if (request.any((element) => element.wordLength == 4)) {
+      lengthOfWordsToRefill.add(4);
+    }
+    if (request.any((element) => element.wordLength == 5)) {
+      lengthOfWordsToRefill.add(5);
+    }
+    if (request.any((element) => element.wordLength == 6)) {
+      lengthOfWordsToRefill.add(6);
+    }
+    for (int index = 0; index < lengthOfWordsToRefill.length; index++) {
+      List<String> words = [];
+      final String key = keys[lengthOfWordsToRefill[index]]!;
+      final QuerySnapshot<Map<String, dynamic>> collection = await db.collection(key).get();
+      for (var doc in collection.docs) {
+        String word = doc.data()['word'] as String;
+        words.add(word);
+      }
+      result[lengthOfWordsToRefill[index]] = words;
     }
     return result;
   }
