@@ -1,8 +1,8 @@
-class LoginEmailRequestModel{
+class EmailPasswordRequestModel{
   final String email;
   final String password;
 
-  LoginEmailRequestModel({
+  EmailPasswordRequestModel({
     required this.email,
     required this.password,
   });

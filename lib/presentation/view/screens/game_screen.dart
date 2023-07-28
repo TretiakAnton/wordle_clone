@@ -82,20 +82,19 @@ class _GameContentState extends State<_GameContent> {
       },
       builder: (context, state) {
         return Column(
-          // mainAxisSize: MainAxisSize.min,
           children: [
             const Spacer(),
             Flexible(
               fit: FlexFit.loose,
-              flex: bloc.numberOfLetters,
+              flex: bloc.numberOfLetters + 2,
               child: ListView.builder(
                 physics: const NeverScrollableScrollPhysics(),
                 itemCount: bloc.numberOfLetters + 1,
+                shrinkWrap: true,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: horizontalPadding(context: context, pixels: 15),
-                      vertical: verticalPadding(context: context, pixels: 0),
                     ),
                     child: LettersField(
                       codeLength: bloc.numberOfLetters,
@@ -110,6 +109,9 @@ class _GameContentState extends State<_GameContent> {
                   );
                 },
               ),
+            ),
+            SizedBox(
+              height: verticalPadding(context: context, pixels: 15),
             ),
             OutlinedButton(
               onPressed: () async {

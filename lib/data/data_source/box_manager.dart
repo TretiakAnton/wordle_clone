@@ -1,13 +1,16 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:wordle_clone/core/constants.dart';
 import 'package:wordle_clone/data/entity/word_list.dart';
 
 class BoxManager {
   static final BoxManager _instance = BoxManager._internal();
-  final String key = 'lettersList';
-  late Box words4LetterBox;
-  late Box words5LetterBox;
-  late Box words6LetterBox;
+  final String _key4Letters = '4Letters';
+  final String _key5Letters = '5Letters';
+  final String _key6Letters = '6Letters';
+  final String _hiveUaWordBox = 'uaWordsBox';
+  final String _hiveEnWordBox = 'enWordsBox';
+  bool _isInited = false;
+  late Box _enWordsBox;
+  late Box _uaWordsBox;
 
   factory BoxManager() {
     return _instance;
@@ -16,66 +19,55 @@ class BoxManager {
   BoxManager._internal();
 
   Future<void> init() async {
-    words4LetterBox = await Hive.openBox(hiveKey4Letters);
-    words5LetterBox = await Hive.openBox(hiveKey5Letters);
-    words6LetterBox = await Hive.openBox(hiveKey6Letters);
-  }
-
-  Future<bool> is4LettersEmpty() async {
-    final WordList? words = await words4LetterBox.get(key);
-    if (words != null) {
-      return words.words.isEmpty;
+    if (_isInited) {
+      return;
     }
-    return true;
+    _uaWordsBox = await Hive.openBox(_hiveUaWordBox);
+    _enWordsBox = await Hive.openBox(_hiveEnWordBox);
+    _isInited = true;
   }
 
-  Future<bool> is5LettersEmpty() async {
-    final WordList? words = await words5LetterBox.get(key);
-    if (words != null) {
-      return words.words.isEmpty;
-    }
-    return true;
+  Future<bool> _isWordlistBoxEmpty(Box wordBox, String key) async {
+    final WordList? words = await wordBox.get(key);
+    return words?.words.isEmpty ?? true;
   }
 
-  Future<bool> is6LettersEmpty() async {
-    final WordList? words = await words6LetterBox.get(key);
-    if (words != null) {
-      return words.words.isEmpty;
-    }
-    return true;
+  Future<bool> checkBoxEmpty({required bool isEn, required int length}) async {
+    final String key = _chooseKey(length: length);
+    return await _isWordlistBoxEmpty(isEn ? _enWordsBox : _uaWordsBox, key);
   }
 
-  Future<void> fill4LettersWords({required WordList words}) async {
-    return await words4LetterBox.put(key, words);
+  Future<void> fillWords({required bool isEn, required int length, required WordList words}) async {
+    final String key = _chooseKey(length: length);
+    return await _putWordlistToBox(isEn ? _enWordsBox : _uaWordsBox, key, words);
   }
 
-  Future<void> fill5LettersWords({required WordList words}) async {
-    return await words5LetterBox.put(key, words);
+  Future<void> _putWordlistToBox(Box wordBox, String key, WordList words) async {
+    return await wordBox.put(key, words);
   }
 
-  Future<void> fill6LettersWords({required WordList words}) async {
-    return await words6LetterBox.put(key, words);
+  Future<String> getFromBox(Box wordBox, String key) async {
+    final WordList list = await wordBox.get(key);
+    final word = list.words.removeAt(0);
+    await wordBox.put(key, list);
+    return word;
   }
 
-  Future<String> getWord({required int length}) async {
-    String word = '';
-    Box box;
+  Future<String> getWordlistFromBox({required int length, required bool isEn}) async {
+    final String key = _chooseKey(length: length);
+    return await getFromBox(isEn ? _enWordsBox : _uaWordsBox, key);
+  }
+
+  String _chooseKey({required int length}) {
     switch (length) {
       case 4:
-        box = words4LetterBox;
-        break;
+        return _key4Letters;
       case 5:
-        box = words5LetterBox;
-        break;
+        return _key5Letters;
       case 6:
-        box = words6LetterBox;
-        break;
+        return _key6Letters;
       default:
-        box = words5LetterBox;
+        return _key4Letters;
     }
-    final WordList list = await box.get(key);
-    word = list.words.removeAt(0);
-    await box.put(key, list);
-    return word;
   }
 }

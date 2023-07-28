@@ -1,8 +1,8 @@
-class LoginEmailRequestEntity {
+class EmailPasswordRequestEntity {
   final String email;
   final String password;
 
-  LoginEmailRequestEntity({
+  EmailPasswordRequestEntity({
     required this.email,
     required this.password,
   });

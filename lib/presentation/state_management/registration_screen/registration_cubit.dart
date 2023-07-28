@@ -4,10 +4,10 @@ import 'package:wordle_clone/domain/model/login_email_request.dart';
 import 'package:wordle_clone/domain/use_cases/auth_use_case/auth_use_case.dart';
 import 'package:wordle_clone/presentation/view/widgets/snackbars.dart';
 
-part 'login_state.dart';
+part 'registration_state.dart';
 
-class LoginCubit extends Cubit<LoginState> {
-  LoginCubit() : super(LoginInitial());
+class RegistrationCubit extends Cubit<RegistrationState> {
+  RegistrationCubit() : super(RegistrationInitial());
 
   final AuthUseCase _useCase = AuthUseCase();
 
@@ -15,17 +15,18 @@ class LoginCubit extends Cubit<LoginState> {
     required String email,
     required String password,
   }) async {
-    if (state is LoginInProgress) {
+    if (state is RegistrationInProgress) {
       return;
     }
-    emit(LoginInProgress());
-    final resultState = await _useCase.emailPasswordLogin(
+    emit(RegistrationInProgress());
+
+    final resultState = await _useCase.emailPasswordRegister(
       model: EmailPasswordRequestModel(
         email: email,
         password: password,
       ),
     );
-    if (resultState is LoginFailed) {
+    if (resultState is RegistrationFailed) {
       OrdinarySnackbar().showSnackBar(label: resultState.error ?? 'Error');
     }
     emit(resultState);

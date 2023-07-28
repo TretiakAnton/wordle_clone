@@ -1,3 +1,4 @@
+import 'package:wordle_clone/data/entity/requests/menu/word_refill_request.dart';
 import 'package:wordle_clone/data/entity/responses/check_words_response.dart';
 import 'package:wordle_clone/data/entity/responses/get_words_response.dart';
 import 'package:wordle_clone/data/repository/menu_repository.dart';
@@ -31,9 +32,7 @@ class MenuUseCase {
     await response.fold((failure) async {
       return result = MenuFailed(failure.errorMessage);
     }, (checkWordResponse) async {
-      if (checkWordResponse.is4LettersWordsEmpty ||
-          checkWordResponse.is5LettersWordsEmpty ||
-          checkWordResponse.is6LettersWordsEmpty) {
+      if (checkWordResponse.any((element) => element.isEmpty)) {
         result = await _refillWords(checkWordResponse: checkWordResponse);
       } else {
         result = MenuCompleted();
@@ -42,13 +41,11 @@ class MenuUseCase {
     return result;
   }
 
-  Future<MenuState> _refillWords(
-      {required CheckWordsResponse checkWordResponse}) async {
+  Future<MenuState> _refillWords({required List<CheckWordsResponse> checkWordResponse}) async {
     MenuState result = MenuInitial();
-    final refillRequest = _translator.checkWordResponseToWordsRefillRequest(
-        response: checkWordResponse);
-    final wordsResponse =
-        await _repository.refillWords(refillRequest: refillRequest);
+    final List<WordRefillRequest> refillRequests =
+        _translator.checkWordResponseToWordsRefillRequest(response: checkWordResponse);
+    final wordsResponse = await _repository.refillWords(refillRequests: refillRequests);
     await wordsResponse.fold((failure) async {
       return result = MenuFailed(failure.errorMessage);
     }, (wordsSource) async {
@@ -58,16 +55,25 @@ class MenuUseCase {
     return result;
   }
 
-  Future<void> _writeWordsToStorage(
-      {required Map<int, GetWordsResponse> source}) async {
+  Future<void> _writeWordsToStorage({required GetWordsResponse source}) async {
+    final List<bool Function(int?)> checkList = [
+      (int? value) => source.enWords?.keys.contains(value) ?? false,
+      (int? value) => source.uaWords?.keys.contains(value) ?? false,
+    ];
+
     for (int index = 4; index <= 6; index++) {
-      if (source.keys.contains(index)) {
-        final GetWordsResponse filteredWords = _translator.filterWordsResponse( source[index]!);
-        await _repository.setWordsList(
-          wordLength: index,
-          words:
-              _translator.getWordsResponseToWordList(response:filteredWords),
-        );
+      for (int i = 0; i < checkList.length; i++) {
+        if (checkList[i](index)) {
+          final Map<int, List<String>>? wordsMap = i == 0 ? source.enWords : source.uaWords;
+          if (wordsMap != null) {
+            final List<String> filteredWords = _translator.filterWordsResponse(wordsMap[index]!);
+            await _repository.setWordsList(
+              isEn: i == 0,
+              wordLength: index,
+              words: _translator.getWordsResponseToWordList(response: filteredWords),
+            );
+          }
+        }
       }
     }
   }

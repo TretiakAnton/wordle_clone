@@ -18,9 +18,19 @@ class _$AppRouter extends RootStackRouter {
   @override
   final Map<String, PageFactory> pagesMap = {
     LoginScreenRoute.name: (routeData) {
+      final args = routeData.argsAs<LoginScreenRouteArgs>(
+          orElse: () => const LoginScreenRouteArgs());
       return MaterialPageX<dynamic>(
         routeData: routeData,
-        child: const LoginScreen(),
+        child: LoginScreen(key: args.key),
+      );
+    },
+    RegistrationScreenRoute.name: (routeData) {
+      final args = routeData.argsAs<RegistrationScreenRouteArgs>(
+          orElse: () => const RegistrationScreenRouteArgs());
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: RegistrationScreen(key: args.key),
       );
     },
     MenuScreenRoute.name: (routeData) {
@@ -50,6 +60,10 @@ class _$AppRouter extends RootStackRouter {
           path: '/login_screen',
         ),
         RouteConfig(
+          RegistrationScreenRoute.name,
+          path: '/registration_screen',
+        ),
+        RouteConfig(
           MenuScreenRoute.name,
           path: '/menu_screen',
         ),
@@ -62,14 +76,51 @@ class _$AppRouter extends RootStackRouter {
 
 /// generated route for
 /// [LoginScreen]
-class LoginScreenRoute extends PageRouteInfo<void> {
-  const LoginScreenRoute()
+class LoginScreenRoute extends PageRouteInfo<LoginScreenRouteArgs> {
+  LoginScreenRoute({Key? key})
       : super(
           LoginScreenRoute.name,
           path: '/login_screen',
+          args: LoginScreenRouteArgs(key: key),
         );
 
   static const String name = 'LoginScreenRoute';
+}
+
+class LoginScreenRouteArgs {
+  const LoginScreenRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'LoginScreenRouteArgs{key: $key}';
+  }
+}
+
+/// generated route for
+/// [RegistrationScreen]
+class RegistrationScreenRoute
+    extends PageRouteInfo<RegistrationScreenRouteArgs> {
+  RegistrationScreenRoute({Key? key})
+      : super(
+          RegistrationScreenRoute.name,
+          path: '/registration_screen',
+          args: RegistrationScreenRouteArgs(key: key),
+        );
+
+  static const String name = 'RegistrationScreenRoute';
+}
+
+class RegistrationScreenRouteArgs {
+  const RegistrationScreenRouteArgs({this.key});
+
+  final Key? key;
+
+  @override
+  String toString() {
+    return 'RegistrationScreenRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for

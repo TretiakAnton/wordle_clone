@@ -9,12 +9,31 @@ import 'package:wordle_clone/data/entity/requests/auth/login_email_request.dart'
 class AuthRepository with RepoLoggy {
   final AuthDataSource _source = AuthDataSource();
 
-  Future<Either<ServerFailure, UserCredential>> emailPasswordLogin({required LoginEmailRequestEntity request}) async {
+  Future<Either<ServerFailure, UserCredential>> emailPasswordLogin(
+      {required EmailPasswordRequestEntity request}) async {
     try {
       final result = await _source.emailPasswordLogin(request: request);
       return Right(result);
+    } on FirebaseAuthException catch (e) {
+      return Left(ServerFailure(errorMessage: e.message));
     } on CustomException catch (e) {
       return Left(ServerFailure(errorMessage: e.message));
+    } catch (e) {
+      return Left(ServerFailure(errorMessage: 'An unknown error occurred'));
+    }
+  }
+
+  Future<Either<ServerFailure, UserCredential>> emailPasswordRegistration(
+      {required EmailPasswordRequestEntity request}) async {
+    try {
+      final result = await _source.emailPasswordRegister(request: request);
+      return Right(result);
+    } on FirebaseAuthException catch (e) {
+      return Left(ServerFailure(errorMessage: e.message));
+    } on CustomException catch (e) {
+      return Left(ServerFailure(errorMessage: e.message));
+    } catch (e) {
+      return Left(ServerFailure(errorMessage: 'An unknown error occurred'));
     }
   }
 }

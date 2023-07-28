@@ -29,6 +29,7 @@ class MenuScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
+                          //Text(state.toString()),
                           const Spacer(),
                           OutlinedButton(
                             onPressed: () {

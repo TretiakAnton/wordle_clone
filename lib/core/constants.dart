@@ -1,9 +1,5 @@
 import 'package:flutter/cupertino.dart';
 
-///keys for hive for boxes for 4,5,6 letters words
-String hiveKey4Letters = '4letters';
-String hiveKey5Letters = '5letters';
-String hiveKey6Letters = '6letters';
 
 double verticalPadding({
   required BuildContext context,

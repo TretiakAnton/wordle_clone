@@ -1,11 +1,11 @@
 class CheckWordsResponse {
-  final bool is4LettersWordsEmpty;
-  final bool is5LettersWordsEmpty;
-  final bool is6LettersWordsEmpty;
+  final bool isEn;
+  final int wordLength;
+  final bool isEmpty;
 
   CheckWordsResponse({
-    required this.is4LettersWordsEmpty,
-    required this.is5LettersWordsEmpty,
-    required this.is6LettersWordsEmpty,
+    required this.isEn,
+    required this.wordLength,
+    required this.isEmpty,
   });
 }
