@@ -16,14 +16,17 @@ class MenuRepository with RepoLoggy {
   final BoxManager _boxManager = BoxManager();
 
   Future<Either<ServerFailure, List<CheckWordsResponse>>> checkWords() async {
-    List<CheckWordsResponse> result = [];
     try {
-      result.add(CheckWordsResponse(isEn: true, wordLength: 4, isEmpty: await _boxManager.is4LettersEnEmpty()));
-      result.add(CheckWordsResponse(isEn: true, wordLength: 5, isEmpty: await _boxManager.is5LettersEnEmpty()));
-      result.add(CheckWordsResponse(isEn: true, wordLength: 6, isEmpty: await _boxManager.is6LettersEnEmpty()));
-      result.add(CheckWordsResponse(isEn: false, wordLength: 4, isEmpty: await _boxManager.is4LettersUaEmpty()));
-      result.add(CheckWordsResponse(isEn: false, wordLength: 5, isEmpty: await _boxManager.is5LettersUaEmpty()));
-      result.add(CheckWordsResponse(isEn: false, wordLength: 6, isEmpty: await _boxManager.is6LettersUaEmpty()));
+      final List<CheckWordsResponse> result = [];
+      final List<bool> isEmptyList = [];
+      for (int length = 4; length <= 6; length++) {
+        isEmptyList.add(await _boxManager.checkBoxEmpty(isEn: true, length: length));
+        isEmptyList.add(await _boxManager.checkBoxEmpty(isEn: false, length: length));
+      }
+      for (int i = 0; i < 3; i++) {
+        result.add(CheckWordsResponse(isEn: true, wordLength: i + 4, isEmpty: isEmptyList[i * 2]));
+        result.add(CheckWordsResponse(isEn: false, wordLength: i + 4, isEmpty: isEmptyList[i * 2 + 1]));
+      }
       return Right(result);
     } on CustomException catch (e) {
       return Left(ServerFailure(errorMessage: e.message));
@@ -46,34 +49,6 @@ class MenuRepository with RepoLoggy {
     required int wordLength,
     required WordList words,
   }) async {
-    if (isEn) {
-      switch (wordLength) {
-        case 4:
-          await _boxManager.fill4LettersEnWords(words: words);
-          break;
-        case 5:
-          await _boxManager.fill5LettersEnWords(words: words);
-          break;
-        case 6:
-          await _boxManager.fill6LettersEnWords(words: words);
-          break;
-        default:
-          break;
-      }
-    } else {
-      switch (wordLength) {
-        case 4:
-          await _boxManager.fill4LettersUaWords(words: words);
-          break;
-        case 5:
-          await _boxManager.fill5LettersUaWords(words: words);
-          break;
-        case 6:
-          await _boxManager.fill6LettersUaWords(words: words);
-          break;
-        default:
-          break;
-      }
-    }
+    return await _boxManager.fillWords(isEn: isEn, length: wordLength, words: words);
   }
 }

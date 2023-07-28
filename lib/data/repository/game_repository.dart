@@ -20,7 +20,7 @@ class GameRepository with RepoLoggy {
   }
 
   Future<String> getSecretWord({required int length, required bool isEn}) async {
-    return await _boxManager.getWord(
+    return await _boxManager.getWordlistFromBox(
       length: length,
       isEn: isEn,
     );
