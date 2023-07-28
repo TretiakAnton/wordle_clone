@@ -18,7 +18,6 @@ part 'app_router.gr.dart';
     AutoRoute(
       page: RegistrationScreen,
       path: Routes.registrationScreen,
-      initial: true,
     ),
     AutoRoute(
       page: MenuScreen,

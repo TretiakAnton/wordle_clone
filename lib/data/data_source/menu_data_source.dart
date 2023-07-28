@@ -1,10 +1,14 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:wordle_clone/data/entity/requests/menu/word_refill_request.dart';
 import 'package:http/http.dart' as http;
+import 'package:wordle_clone/data/entity/requests/menu/ua_words_request.dart';
 import 'package:wordle_clone/data/entity/responses/get_words_response.dart';
+import 'package:wordle_clone/firebase_options.dart';
 
 class MenuDataSource {
   final _amount = 30;
@@ -19,7 +23,8 @@ class MenuDataSource {
       result.enWords = enWords;
     }
     if (requests.any((element) => !element.isEn)) {
-      final uaWords = await compute(_refillUaWords, requests);
+      RootIsolateToken rootIsolateToken = RootIsolateToken.instance!;
+      final uaWords = await compute(_refillUaWords, UaWordsRequest(requests, rootIsolateToken));
       result.uaWords = uaWords;
     }
     return result;
@@ -56,7 +61,9 @@ class MenuDataSource {
     return wordsList;
   }
 
-  Future<Map<int, List<String>>> _refillUaWords(List<WordRefillRequest> request) async {
+  Future<Map<int, List<String>>> _refillUaWords(UaWordsRequest params) async {
+    final request = params.requests;
+    BackgroundIsolateBinaryMessenger.ensureInitialized(params.rootIsolateToken);
     final db = FirebaseFirestore.instance;
     Map<int, List<String>> result = {};
     Map<int, String> keys = {
