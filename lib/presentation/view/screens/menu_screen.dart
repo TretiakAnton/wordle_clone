@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wordle_clone/core/constants.dart';
 import 'package:wordle_clone/core/navigation/routes.dart';
 import 'package:wordle_clone/presentation/state_management/menu_bloc/menu_cubit.dart';
+import 'package:wordle_clone/presentation/view/widgets/menu_drawer.dart';
 
 class MenuScreen extends StatelessWidget {
   const MenuScreen({Key? key}) : super(key: key);
@@ -15,6 +16,10 @@ class MenuScreen extends StatelessWidget {
       child: GestureDetector(
         onTap: () => bloc.numberOfLetters = null,
         child: Scaffold(
+          appBar: AppBar(
+            title: const Text('Main Screen'),
+          ),
+          drawer: const MenuDrawer(  ),
           body: BlocConsumer<MenuCubit, MenuState>(
             listener: (context, state) {
               if (state is MenuInitial) {
