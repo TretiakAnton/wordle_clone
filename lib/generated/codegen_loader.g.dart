@@ -15,12 +15,67 @@ class CodegenLoader extends AssetLoader{
   }
 
   static const Map<String,dynamic> en_GB = {
-  "test": "En test",
-  "test1": "En test1"
+  "english": "English",
+  "ukrainian": "Ukrainian",
+  "confirm": "Confirm",
+  "language": "Language",
+  "guess": "Guess",
+  "words_language": "Words language",
+  "dont_have_an_account": "Don't have an account? ",
+  "create_it_now": "Create it now!",
+  "you_win": "You win",
+  "you_loose": "You loose",
+  "you_guess_word": "You guess word",
+  "you_dont_guess_word": "You don't guess word",
+  "guesses": {
+    "one": "with {} guess",
+    "two": "with {} guesses",
+    "few": "with {} guesses",
+    "many": "with {} guesses",
+    "other": "with {} guesses"
+  },
+  "letter": {
+    "zero": "{} letters",
+    "one": "{} letter",
+    "two": "{} letters",
+    "few": "{} letters",
+    "many": "{} letters",
+    "other": "{} letters"
+  },
+  "close": "Close",
+  "register": "Register",
+  "login": "Login"
 };
 static const Map<String,dynamic> uk_UA = {
-  "test": "Тест",
-  "test1": "Тест1"
+  "english": "Англійська",
+  "ukrainian": "Українська",
+  "confirm": "Підтвердити",
+  "language": "Мова",
+  "guess": "Вгадати",
+  "words_language": "Мова слів",
+  "dont_have_an_account": "Не маєте аккаунту? ",
+  "create_it_now": "Створіть зараз!",
+  "you_win": "Ви виграли",
+  "you_loose": "Ви програли",
+  "you_guess_word": "Ви вгадали слово",
+  "you_dont_guess_word": "Ви не вгадали слово",
+  "guesses": {
+    "one": "використавши {} спробу",
+    "two": "використавши {} спроби",
+    "few": "використавши {} спроби",
+    "many": "використавши {} спроб",
+    "other": "використавши {} спроб"
+  },
+  "letter": {
+    "one": "{} буква",
+    "two": "{} букви",
+    "few": "{} букви",
+    "many": "{} букв",
+    "other": "{} букв"
+  },
+  "close": "Закрити",
+  "register": "Регістрація",
+  "login": "Логін"
 };
 static const Map<String, Map<String,dynamic>> mapLocales = {"en_GB": en_GB, "uk_UA": uk_UA};
 }

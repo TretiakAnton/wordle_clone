@@ -1,9 +1,11 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wordle_clone/core/constants.dart';
 import 'package:wordle_clone/core/navigation/routes.dart';
+import 'package:wordle_clone/generated/locale_keys.g.dart';
 import 'package:wordle_clone/presentation/state_management/login_bloc/login_cubit.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -59,7 +61,7 @@ class LoginScreen extends StatelessWidget {
                         password: passwordController.text,
                       );
                     },
-                    child: state is LoginInProgress ? const CircularProgressIndicator() : const Text('Login'),
+                    child: state is LoginInProgress ? const CircularProgressIndicator() : Text(LocaleKeys.login.tr()),
                   ),
                   SizedBox(
                     height: verticalPadding(
@@ -69,11 +71,11 @@ class LoginScreen extends StatelessWidget {
                   ),
                   RichText(
                     text: TextSpan(
-                      text: "Don't have an account? ",
+                      text: LocaleKeys.dont_have_an_account.tr(),
                       style: const TextStyle(color: Colors.black),
                       children: [
                         TextSpan(
-                          text: 'Create it now!',
+                          text: LocaleKeys.create_it_now.tr(),
                           style: const TextStyle(color: Colors.deepPurple),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () => context.router.pushNamed(Routes.registrationScreen),

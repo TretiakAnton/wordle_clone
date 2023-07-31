@@ -3,7 +3,6 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wordle_clone/core/constants.dart';
-import 'package:wordle_clone/data/entity/language.dart';
 import 'package:wordle_clone/generated/locale_keys.g.dart';
 import 'package:wordle_clone/presentation/state_management/seetings_bloc/settings_cubit.dart';
 import 'package:wordle_clone/presentation/view/widgets/language_selectable_tile.dart';
@@ -16,16 +15,11 @@ class WordsLanguageScreen extends StatefulWidget {
 }
 
 class _WordsLanguageScreenState extends State<WordsLanguageScreen> {
-  late Language _selected;
-
-  @override
-  void initState() {
-    _selected = context.read<SettingsCubit>().selectedWordLanguage;
-    super.initState();
-  }
+  Locale? _selected;
 
   @override
   Widget build(BuildContext context) {
+    _selected = _selected ?? context.locale;
     final bloc = context.read<SettingsCubit>();
     return SafeArea(
       child: Scaffold(
@@ -43,8 +37,8 @@ class _WordsLanguageScreenState extends State<WordsLanguageScreen> {
                   itemBuilder: (BuildContext context, int index) {
                     return LanguageSelectableTile(
                       current: bloc.availableWordLanguage[index],
-                      selected: _selected,
-                      onChange: (Language? selected) {
+                      selected: _selected!,
+                      onChange: (Locale? selected) {
                         setState(() {
                           if (selected != null) {
                             _selected = selected;
@@ -57,12 +51,12 @@ class _WordsLanguageScreenState extends State<WordsLanguageScreen> {
               ),
               TextButton(
                 onPressed: () async {
-                  await bloc.setWordsLanguage(_selected);
+                  await bloc.setWordsLanguage(_selected!);
                   if (context.mounted) {
                     context.router.pop();
                   }
                 },
-                child: Text(LocaleKeys.test1.tr()),
+                child: Text(LocaleKeys.confirm.tr()),
               ),
             ],
           ),

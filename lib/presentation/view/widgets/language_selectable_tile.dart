@@ -1,7 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:wordle_clone/core/constants.dart';
-import 'package:wordle_clone/data/entity/language.dart';
+import 'package:wordle_clone/generated/locale_keys.g.dart';
 
 class LanguageSelectableTile extends StatelessWidget {
   const LanguageSelectableTile({
@@ -10,22 +11,22 @@ class LanguageSelectableTile extends StatelessWidget {
     required this.selected,
     required this.onChange,
   }) : super(key: key);
-  final Language current;
-  final Language selected;
-  final Function(Language?) onChange;
+  final Locale current;
+  final Locale selected;
+  final Function(Locale?) onChange;
 
   @override
   Widget build(BuildContext context) {
-    return RadioListTile<Language>(
+    return RadioListTile<Locale>(
       title: Row(
         children: [
-          Text(current.languageName()),
+          Text(_languageName(locale: current)),
           SizedBox(
             width: horizontalPadding(context: context, pixels: 15),
           ),
           ClipOval(
             child: CachedNetworkImage(
-              imageUrl: current.icon(),
+              imageUrl: _icon(locale: current),
               height: 24,
               width: 24,
               fit: BoxFit.cover,
@@ -35,7 +36,22 @@ class LanguageSelectableTile extends StatelessWidget {
       ),
       value: current,
       groupValue: selected,
-      onChanged: (Language? value) => onChange(value),
+      onChanged: (Locale? value) => onChange(value),
     );
+  }
+
+  String _languageName({required Locale locale}) {
+    switch (locale.countryCode) {
+      case 'GB':
+        return LocaleKeys.english.tr();
+      case 'UA':
+        return LocaleKeys.ukrainian.tr();
+      default:
+        return '';
+    }
+  }
+
+  String _icon({required Locale locale}) {
+    return 'https://flagcdn.com/w320/${locale.countryCode?.toLowerCase()}.png';
   }
 }

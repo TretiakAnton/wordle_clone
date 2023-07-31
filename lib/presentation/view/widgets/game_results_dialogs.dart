@@ -1,5 +1,7 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:wordle_clone/domain/model/game_result.dart';
+import 'package:wordle_clone/generated/locale_keys.g.dart';
 
 Future<void> showWinDialog({
   required BuildContext context,
@@ -12,25 +14,27 @@ Future<void> showWinDialog({
     barrierDismissible: false,
     builder: (context) {
       return Dialog(
-        child: isWin
-            ? _WinDialog(
-                result: result,
-                onExit: onExit,
-              )
-            : _LooseDialog(
-                result: result,
-                onExit: onExit,
-              ),
+        child: _EndGameDialog(
+          isWin: isWin,
+          result: result,
+          onExit: onExit,
+        ),
       );
     },
   );
 }
 
-class _WinDialog extends StatelessWidget {
+class _EndGameDialog extends StatelessWidget {
+  final bool isWin;
   final GameResult result;
   final VoidCallback onExit;
 
-  const _WinDialog({required this.result, Key? key, required this.onExit}) : super(key: key);
+  const _EndGameDialog({
+    required this.result,
+    Key? key,
+    required this.onExit,
+    required this.isWin,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -40,41 +44,17 @@ class _WinDialog extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text('You win'),
-          Text('you guess word: ${result.word}'),
-          Text('with ${result.guessesMade} guesses'),
+          Text(isWin ? LocaleKeys.you_win.tr() : LocaleKeys.you_loose.tr()),
+          Text('${isWin ? LocaleKeys.you_guess_word.tr() : LocaleKeys.you_dont_guess_word.tr()}: ${result.word}'),
+          Text(LocaleKeys.guesses.plural(result.guessesMade)),
           TextButton(
             onPressed: () {
               onExit();
             },
-            child: const Text('Close'),
+            child: Text(LocaleKeys.close.tr()),
           ),
         ],
       ),
-    );
-  }
-}
-
-class _LooseDialog extends StatelessWidget {
-  final GameResult result;
-  final VoidCallback onExit;
-
-  const _LooseDialog({required this.result, Key? key, required this.onExit}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Column(
-      children: [
-        const Text('You loose'),
-        Text('you failed to guess word: ${result.word}'),
-        Text('with ${result.guessesMade} guesses'),
-        TextButton(
-          onPressed: () {
-            onExit();
-          },
-          child: const Text('Close'),
-        ),
-      ],
     );
   }
 }

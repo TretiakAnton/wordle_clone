@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wordle_clone/data/entity/language.dart';
 import 'package:wordle_clone/domain/use_cases/settings_use_case/settings_use_case.dart';
 import 'package:wordle_clone/presentation/view/widgets/snackbars.dart';
 
@@ -11,15 +10,11 @@ class SettingsCubit extends Cubit<SettingsState> {
 
   final SettingsUseCase _useCase = SettingsUseCase();
 
-  Language get selectedInterfaceLanguage => _useCase.interfaceLocale;
+  Locale get selectedWordLanguage => _useCase.wordLocale;
 
-  Language get selectedWordLanguage => _useCase.wordLocale;
+  List<Locale> get availableWordLanguage => _useCase.availableWordLocales;
 
-  List<Language> get availableInterfaceLanguage => _useCase.availableInterfaceLocales;
-
-  List<Language> get availableWordLanguage => _useCase.availableWordLocales;
-
-  Future<void> setWordsLanguage(Language selected) async {
+  Future<void> setWordsLanguage(Locale selected) async {
     emit(SettingsInProgress());
     SettingsState resultState = await _useCase.setWordsLanguage(selected);
     if (resultState is SettingsFailed) {
@@ -29,13 +24,4 @@ class SettingsCubit extends Cubit<SettingsState> {
     emit(resultState);
   }
 
-  Future<void> setInterfaceLanguage(Language selected) async {
-    emit(SettingsInProgress());
-    SettingsState resultState = await _useCase.setInterfaceLanguage(selected);
-    if (resultState is SettingsFailed) {
-      OrdinarySnackbar().showSnackBar(label: resultState.error ?? 'Error');
-      resultState = SettingsCompleted();
-    }
-    emit(resultState);
-  }
 }

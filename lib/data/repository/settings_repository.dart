@@ -1,11 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:wordle_clone/core/networking/errors.dart';
 import 'package:wordle_clone/core/networking/exceptions.dart';
 import 'package:wordle_clone/core/networking/repo_loggy.dart';
 import 'package:wordle_clone/data/data_source/box_manager.dart';
 import 'package:wordle_clone/data/data_source/settings_data_source.dart';
-import 'package:wordle_clone/data/entity/language.dart';
 import 'package:wordle_clone/data/entity/requests/auth/login_email_request.dart';
 
 class SettingsRepository with RepoLoggy {
@@ -26,43 +26,25 @@ class SettingsRepository with RepoLoggy {
     }
   }
 
-  Either<ServerFailure, Language> getSelectedInterfaceLanguage() {
+  Either<ServerFailure, Locale> getSelectedWordsLanguage() {
     try {
-      final Language selectedLocale = _boxManager.getSelectedInterfaceLanguage();
+      final Locale selectedLocale = _boxManager.getSelectedWordsLanguage();
       return Right(selectedLocale);
     } on Exception catch (e) {
       return Left(ServerFailure(errorMessage: e.toString()));
     }
   }
 
-  Either<ServerFailure, Language> getSelectedWordsLanguage() {
+  Either<ServerFailure, List<Locale>> getAvailableWordsLanguage() {
     try {
-      final Language selectedLocale = _boxManager.getSelectedWordsLanguage();
+      final List<Locale> selectedLocale = _boxManager.getAvailableWordsLanguage();
       return Right(selectedLocale);
     } on Exception catch (e) {
       return Left(ServerFailure(errorMessage: e.toString()));
     }
   }
 
-  Either<ServerFailure, List<Language>> getAvailableWordsLanguage() {
-    try {
-      final List<Language> selectedLocale = _boxManager.getAvailableWordsLanguage();
-      return Right(selectedLocale);
-    } on Exception catch (e) {
-      return Left(ServerFailure(errorMessage: e.toString()));
-    }
-  }
-
-  Either<ServerFailure, List<Language>> getAvailableInterfaceLanguage() {
-    try {
-      final List<Language> selectedLocale = _boxManager.getAvailableInterfaceLanguage();
-      return Right(selectedLocale);
-    } on Exception catch (e) {
-      return Left(ServerFailure(errorMessage: e.toString()));
-    }
-  }
-
-  Future<Either<ServerFailure, void>> setWordsLanguage(Language selected) async {
+  Future<Either<ServerFailure, void>> setWordsLanguage(Locale selected) async {
     try {
       await _boxManager.setWordsLanguage(selected);
       return const Right(null);
@@ -71,12 +53,4 @@ class SettingsRepository with RepoLoggy {
     }
   }
 
-  Future<Either<ServerFailure, void>> setInterfaceLanguage(Language selected) async {
-    try {
-      await _boxManager.setInterfaceLanguage(selected);
-      return const Right(null);
-    } on Exception catch (e) {
-      return Left(ServerFailure(errorMessage: e.toString()));
-    }
-  }
 }

@@ -1,7 +1,6 @@
 import 'dart:ui';
 
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:wordle_clone/data/entity/language.dart';
 import 'package:wordle_clone/data/entity/word_list.dart';
 
 class BoxManager {
@@ -31,10 +30,9 @@ class BoxManager {
   }
 
   Future<void> _initLanguages() async {
-    final Language uaLang = Language(locale: const Locale('uk', 'UA'));
-    final Language enLang = Language(locale: const Locale('en', 'GB'));
+    const Locale uaLang =Locale('uk', 'UA');
+    const Locale enLang = Locale('en', 'GB');
     await _settingsBox.put(_keyManager.keyWordsLanguage, [enLang, uaLang]);
-    await _settingsBox.put(_keyManager.keyInterfaceLanguage, [enLang, uaLang]);
   }
 
   Future<bool> _isWordlistBoxEmpty(Box wordBox, String key) async {
@@ -81,17 +79,8 @@ class BoxManager {
     }
   }
 
-  Language getSelectedInterfaceLanguage() {
-    Language? selectedLocale = _settingsBox.get(_keyManager.keySelectedInterfaceLanguage);
-    if (selectedLocale == null) {
-      selectedLocale = _settingsBox.get(_keyManager.keyInterfaceLanguage).first;
-      _settingsBox.put(_keyManager.keySelectedInterfaceLanguage, selectedLocale);
-    }
-    return selectedLocale!;
-  }
-
-  Language getSelectedWordsLanguage() {
-    Language? selectedLocale = _settingsBox.get(_keyManager.keySelectedWordsLanguage);
+  Locale getSelectedWordsLanguage() {
+    Locale? selectedLocale = _settingsBox.get(_keyManager.keySelectedWordsLanguage);
     if (selectedLocale == null) {
       selectedLocale = _settingsBox.get(_keyManager.keyWordsLanguage).first;
       _settingsBox.put(_keyManager.keySelectedWordsLanguage, selectedLocale);
@@ -99,20 +88,12 @@ class BoxManager {
     return selectedLocale!;
   }
 
-  List<Language> getAvailableWordsLanguage() {
+  List<Locale> getAvailableWordsLanguage() {
     return _settingsBox.get(_keyManager.keyWordsLanguage);
   }
 
-  List<Language> getAvailableInterfaceLanguage() {
-    return _settingsBox.get(_keyManager.keyInterfaceLanguage);
-  }
-
-  Future<void> setWordsLanguage(Language selected) async {
+  Future<void> setWordsLanguage(Locale selected) async {
     return await _settingsBox.put(_keyManager.keyWordsLanguage, selected);
-  }
-
-  Future<void> setInterfaceLanguage(Language selected) async {
-    return await _settingsBox.put(_keyManager.keyInterfaceLanguage, selected);
   }
 }
 
@@ -122,6 +103,4 @@ class _KeyManager {
   final String key6Letters = '6Letters';
   final String keyWordsLanguage = 'wordsLanguage';
   final String keySelectedWordsLanguage = 'selectedWordsLanguage';
-  final String keyInterfaceLanguage = 'interfaceLanguage';
-  final String keySelectedInterfaceLanguage = 'selectedInterfaceLanguage';
 }
