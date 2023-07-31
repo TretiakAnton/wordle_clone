@@ -1,13 +1,13 @@
 import 'package:wordle_clone/data/repository/auth_repository.dart';
 import 'package:wordle_clone/domain/model/login_email_request.dart';
 import 'package:wordle_clone/domain/model/user.dart';
-import 'package:wordle_clone/domain/translator/auth_translator/login_email_translator.dart';
+import 'package:wordle_clone/domain/translator/auth_translator/auth_translator.dart';
 import 'package:wordle_clone/presentation/state_management/login_bloc/login_cubit.dart';
-import 'package:wordle_clone/presentation/state_management/registration_screen/registration_cubit.dart';
+import 'package:wordle_clone/presentation/state_management/registration_bloc/registration_cubit.dart';
 
 class AuthUseCase {
   final AuthRepository _repository = AuthRepository();
-  final LoginEmailTranslator _translator = LoginEmailTranslator();
+  final AuthTranslator _translator = AuthTranslator();
   User? _user;
 
   Future<LoginState> emailPasswordLogin({required EmailPasswordRequestModel model}) async {

@@ -45,6 +45,18 @@ class _$AppRouter extends RootStackRouter {
         child: const GameScreen(),
       );
     },
+    WordsLanguageScreenRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const WordsLanguageScreen(),
+      );
+    },
+    InterfaceLanguageScreenRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const InterfaceLanguageScreen(),
+      );
+    },
   };
 
   @override
@@ -70,6 +82,14 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           GameScreenRoute.name,
           path: '/game_screen',
+        ),
+        RouteConfig(
+          WordsLanguageScreenRoute.name,
+          path: '/words_language_screen',
+        ),
+        RouteConfig(
+          InterfaceLanguageScreenRoute.name,
+          path: '/interface_language_screen',
         ),
       ];
 }
@@ -145,4 +165,28 @@ class GameScreenRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'GameScreenRoute';
+}
+
+/// generated route for
+/// [WordsLanguageScreen]
+class WordsLanguageScreenRoute extends PageRouteInfo<void> {
+  const WordsLanguageScreenRoute()
+      : super(
+          WordsLanguageScreenRoute.name,
+          path: '/words_language_screen',
+        );
+
+  static const String name = 'WordsLanguageScreenRoute';
+}
+
+/// generated route for
+/// [InterfaceLanguageScreen]
+class InterfaceLanguageScreenRoute extends PageRouteInfo<void> {
+  const InterfaceLanguageScreenRoute()
+      : super(
+          InterfaceLanguageScreenRoute.name,
+          path: '/interface_language_screen',
+        );
+
+  static const String name = 'InterfaceLanguageScreenRoute';
 }

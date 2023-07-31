@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wordle_clone/core/constants.dart';
 import 'package:wordle_clone/core/navigation/app_router.dart';
-import 'package:wordle_clone/presentation/state_management/registration_screen/registration_cubit.dart';
+import 'package:wordle_clone/presentation/state_management/registration_bloc/registration_cubit.dart';
 
 class RegistrationScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();

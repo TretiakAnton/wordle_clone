@@ -1,16 +1,17 @@
+import 'dart:ui';
+
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:wordle_clone/data/entity/language.dart';
 import 'package:wordle_clone/data/entity/word_list.dart';
 
 class BoxManager {
   static final BoxManager _instance = BoxManager._internal();
-  final String _key4Letters = '4Letters';
-  final String _key5Letters = '5Letters';
-  final String _key6Letters = '6Letters';
-  final String _hiveUaWordBox = 'uaWordsBox';
-  final String _hiveEnWordBox = 'enWordsBox';
+  final _KeyManager _keyManager = _KeyManager();
+
   bool _isInited = false;
   late Box _enWordsBox;
   late Box _uaWordsBox;
+  late Box _settingsBox;
 
   factory BoxManager() {
     return _instance;
@@ -22,9 +23,18 @@ class BoxManager {
     if (_isInited) {
       return;
     }
-    _uaWordsBox = await Hive.openBox(_hiveUaWordBox);
-    _enWordsBox = await Hive.openBox(_hiveEnWordBox);
+    _uaWordsBox = await Hive.openBox('uaWordsBox');
+    _enWordsBox = await Hive.openBox('enWordsBox');
+    _settingsBox = await Hive.openBox('settingsBox');
+    await _initLanguages();
     _isInited = true;
+  }
+
+  Future<void> _initLanguages() async {
+    final Language uaLang = Language(locale: const Locale('uk', 'UA'));
+    final Language enLang = Language(locale: const Locale('en', 'GB'));
+    await _settingsBox.put(_keyManager.keyWordsLanguage, [enLang, uaLang]);
+    await _settingsBox.put(_keyManager.keyInterfaceLanguage, [enLang, uaLang]);
   }
 
   Future<bool> _isWordlistBoxEmpty(Box wordBox, String key) async {
@@ -33,12 +43,12 @@ class BoxManager {
   }
 
   Future<bool> checkBoxEmpty({required bool isEn, required int length}) async {
-    final String key = _chooseKey(length: length);
+    final String key = _chooseWordsLengthKey(length: length);
     return await _isWordlistBoxEmpty(isEn ? _enWordsBox : _uaWordsBox, key);
   }
 
   Future<void> fillWords({required bool isEn, required int length, required WordList words}) async {
-    final String key = _chooseKey(length: length);
+    final String key = _chooseWordsLengthKey(length: length);
     return await _putWordlistToBox(isEn ? _enWordsBox : _uaWordsBox, key, words);
   }
 
@@ -54,20 +64,64 @@ class BoxManager {
   }
 
   Future<String> getWordlistFromBox({required int length, required bool isEn}) async {
-    final String key = _chooseKey(length: length);
+    final String key = _chooseWordsLengthKey(length: length);
     return await getFromBox(isEn ? _enWordsBox : _uaWordsBox, key);
   }
 
-  String _chooseKey({required int length}) {
+  String _chooseWordsLengthKey({required int length}) {
     switch (length) {
       case 4:
-        return _key4Letters;
+        return _keyManager.key4Letters;
       case 5:
-        return _key5Letters;
+        return _keyManager.key5Letters;
       case 6:
-        return _key6Letters;
+        return _keyManager.key6Letters;
       default:
-        return _key4Letters;
+        return _keyManager.key4Letters;
     }
   }
+
+  Language getSelectedInterfaceLanguage() {
+    Language? selectedLocale = _settingsBox.get(_keyManager.keySelectedInterfaceLanguage);
+    if (selectedLocale == null) {
+      selectedLocale = _settingsBox.get(_keyManager.keyInterfaceLanguage).first;
+      _settingsBox.put(_keyManager.keySelectedInterfaceLanguage, selectedLocale);
+    }
+    return selectedLocale!;
+  }
+
+  Language getSelectedWordsLanguage() {
+    Language? selectedLocale = _settingsBox.get(_keyManager.keySelectedWordsLanguage);
+    if (selectedLocale == null) {
+      selectedLocale = _settingsBox.get(_keyManager.keyWordsLanguage).first;
+      _settingsBox.put(_keyManager.keySelectedWordsLanguage, selectedLocale);
+    }
+    return selectedLocale!;
+  }
+
+  List<Language> getAvailableWordsLanguage() {
+    return _settingsBox.get(_keyManager.keyWordsLanguage);
+  }
+
+  List<Language> getAvailableInterfaceLanguage() {
+    return _settingsBox.get(_keyManager.keyInterfaceLanguage);
+  }
+
+  Future<void> setWordsLanguage(Language selected) async {
+    return await _settingsBox.put(_keyManager.keyWordsLanguage, selected);
+  }
+
+  Future<void> setInterfaceLanguage(Language selected) async {
+    return await _settingsBox.put(_keyManager.keyInterfaceLanguage, selected);
+  }
+}
+
+class _KeyManager {
+  final String key4Letters = '4Letters';
+  final String key5Letters = '5Letters';
+  final String key6Letters = '6Letters';
+  final String keyWordsLanguage = 'wordsLanguage';
+  final String keySelectedWordsLanguage = 'selectedWordsLanguage';
+  final String keyInterfaceLanguage = 'interfaceLanguage';
+  final String keySelectedInterfaceLanguage = 'selectedInterfaceLanguage';
 }

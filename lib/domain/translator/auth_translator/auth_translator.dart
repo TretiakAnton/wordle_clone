@@ -3,7 +3,7 @@ import 'package:wordle_clone/data/entity/requests/auth/login_email_request.dart'
 import 'package:wordle_clone/domain/model/login_email_request.dart';
 import 'package:wordle_clone/domain/model/user.dart';
 
-class LoginEmailTranslator {
+class AuthTranslator {
   EmailPasswordRequestEntity emailPasswordRequestModelToEntity({required EmailPasswordRequestModel model}) {
     return EmailPasswordRequestEntity(
       email: model.email,

@@ -64,6 +64,9 @@ class MenuDataSource {
   Future<Map<int, List<String>>> _refillUaWords(UaWordsRequest params) async {
     final request = params.requests;
     BackgroundIsolateBinaryMessenger.ensureInitialized(params.rootIsolateToken);
+    if (Firebase.apps.isEmpty) {
+      await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+    }
     final db = FirebaseFirestore.instance;
     Map<int, List<String>> result = {};
     Map<int, String> keys = {
