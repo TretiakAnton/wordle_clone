@@ -5,6 +5,8 @@ import 'package:wordle_clone/presentation/view/screens/game_screen.dart';
 import 'package:wordle_clone/presentation/view/screens/login_screen.dart';
 import 'package:wordle_clone/presentation/view/screens/menu_screen.dart';
 import 'package:wordle_clone/presentation/view/screens/registration_screen.dart';
+import 'package:wordle_clone/presentation/view/screens/settings/interface_language_screen.dart';
+import 'package:wordle_clone/presentation/view/screens/settings/words_language_screen.dart';
 
 part 'app_router.gr.dart';
 
@@ -26,6 +28,14 @@ part 'app_router.gr.dart';
     AutoRoute(
       page: GameScreen,
       path: Routes.gameScreen,
+    ),
+    AutoRoute(
+      page: WordsLanguageScreen,
+      path: Routes.wordsLanguageScreen,
+    ),
+    AutoRoute(
+      page: InterfaceLanguageScreen,
+      path: Routes.interfaceLanguageScreen,
     ),
   ],
 )

@@ -8,9 +8,7 @@ import 'package:wordle_clone/presentation/state_management/menu_bloc/menu_cubit.
 part 'game_state.dart';
 
 class GameCubit extends Cubit<GameState> {
-  GameCubit() : super(GameInitial()) {
-    // getSecretWord();
-  }
+  GameCubit() : super(GameInitial());
 
   final GameUseCase _useCase = GameUseCase();
 
@@ -58,10 +56,10 @@ class GameCubit extends Cubit<GameState> {
     }
   }
 
-  Future<void> getSecretWord() async {
+  Future<void> getSecretWord({required Locale locale}) async {
     emit(GameLoading());
     _guessesMade = 0;
-    await _useCase.getSecretWord();
+    await _useCase.getSecretWord(isEn: locale.languageCode == 'en');
     emit(GameReady());
   }
 

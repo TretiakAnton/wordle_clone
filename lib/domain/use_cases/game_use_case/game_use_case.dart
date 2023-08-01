@@ -39,10 +39,9 @@ class GameUseCase {
     return null;
   }
 
-  Future<void> getSecretWord() async {
+  Future<void> getSecretWord({required bool isEn}) async {
     secretWord = '';
-    //TODO do localization
-    final word = await _repository.getSecretWord(length: MenuUseCase().numberOfLetters!, isEn: true);
+    final word = await _repository.getSecretWord(length: MenuUseCase().numberOfLetters!, isEn: isEn);
     secretWord = word;
   }
 

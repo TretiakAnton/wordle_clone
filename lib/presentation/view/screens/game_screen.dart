@@ -1,8 +1,11 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wordle_clone/core/constants.dart';
+import 'package:wordle_clone/generated/locale_keys.g.dart';
 import 'package:wordle_clone/presentation/state_management/game_bloc/game_cubit.dart';
+import 'package:wordle_clone/presentation/state_management/settings_bloc/settings_cubit.dart';
 import 'package:wordle_clone/presentation/view/widgets/game_results_dialogs.dart';
 import 'package:wordle_clone/presentation/view/widgets/letters_field.dart';
 
@@ -14,19 +17,25 @@ class GameScreen extends StatelessWidget {
     final bloc = context.read<GameCubit>();
 
     return SafeArea(
-      child: Scaffold(
-        body: FutureBuilder(
-          future: bloc.getSecretWord(),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              return _GameContent(
-                bloc: bloc,
-                textEditingControllers: _fillControllers(length: bloc.numberOfLetters + 1),
-              );
-            } else {
-              return const Center(child: CircularProgressIndicator());
-            }
-          },
+      child: WillPopScope(
+        onWillPop: () async {
+          bloc.clean(context);
+          return true;
+        },
+        child: Scaffold(
+          body: FutureBuilder(
+            future: bloc.getSecretWord(locale: context.read<SettingsCubit>().selectedWordLanguage),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return _GameContent(
+                  bloc: bloc,
+                  textEditingControllers: _fillControllers(length: bloc.numberOfLetters + 1),
+                );
+              } else {
+                return const Center(child: CircularProgressIndicator());
+              }
+            },
+          ),
         ),
       ),
     );
@@ -82,13 +91,14 @@ class _GameContentState extends State<_GameContent> {
       },
       builder: (context, state) {
         return Column(
+          mainAxisSize: MainAxisSize.min,
           children: [
             const Spacer(),
             Flexible(
               fit: FlexFit.loose,
               flex: bloc.numberOfLetters + 2,
               child: ListView.builder(
-                physics: const NeverScrollableScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 itemCount: bloc.numberOfLetters + 1,
                 shrinkWrap: true,
                 itemBuilder: (BuildContext context, int index) {
@@ -120,7 +130,7 @@ class _GameContentState extends State<_GameContent> {
                   bloc.guess(_wordGuess);
                 }
               },
-              child: const Text('Guess'),
+              child: Text(LocaleKeys.guess.tr()),
             ),
             const Spacer(),
           ],

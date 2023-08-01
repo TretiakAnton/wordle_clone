@@ -1,9 +1,11 @@
 import 'package:auto_route/auto_route.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wordle_clone/core/constants.dart';
 import 'package:wordle_clone/core/navigation/app_router.dart';
-import 'package:wordle_clone/presentation/state_management/registration_screen/registration_cubit.dart';
+import 'package:wordle_clone/generated/locale_keys.g.dart';
+import 'package:wordle_clone/presentation/state_management/registration_bloc/registration_cubit.dart';
 
 class RegistrationScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
@@ -63,7 +65,9 @@ class RegistrationScreen extends StatelessWidget {
                         password: passwordController.text,
                       );
                     },
-                    child: state is RegistrationInProgress ? const CircularProgressIndicator() : const Text('Register'),
+                    child: state is RegistrationInProgress
+                        ? const CircularProgressIndicator()
+                        : Text(LocaleKeys.register.tr()),
                   ),
                   const Spacer(),
                 ],

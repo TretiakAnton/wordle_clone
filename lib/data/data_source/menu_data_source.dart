@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -64,6 +65,9 @@ class MenuDataSource {
   Future<Map<int, List<String>>> _refillUaWords(UaWordsRequest params) async {
     final request = params.requests;
     BackgroundIsolateBinaryMessenger.ensureInitialized(params.rootIsolateToken);
+    if (Firebase.apps.isEmpty) {
+      await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+    }
     final db = FirebaseFirestore.instance;
     Map<int, List<String>> result = {};
     Map<int, String> keys = {
@@ -89,7 +93,8 @@ class MenuDataSource {
         String word = doc.data()['word'] as String;
         words.add(word);
       }
-      result[lengthOfWordsToRefill[index]] = words;
+      words.shuffle(Random());
+      result[lengthOfWordsToRefill[index]] = words.take(_amount).toList();
     }
     return result;
   }

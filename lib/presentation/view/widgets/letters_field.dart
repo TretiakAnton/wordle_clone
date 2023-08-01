@@ -115,7 +115,9 @@ class LettersField extends StatelessWidget {
               borderSide: BorderSide.none,
             ),
             filled: true),
-        inputFormatters: <TextInputFormatter>[FilteringTextInputFormatter.allow(RegExp(r'^[a-z]+$'))],
+        inputFormatters: <TextInputFormatter>[
+          FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Zа-яА-ЯґҐєЄіІїЇ]+$')),
+        ],
         keyboardType: TextInputType.text,
         controller: textController,
         onChanged: onChange,
