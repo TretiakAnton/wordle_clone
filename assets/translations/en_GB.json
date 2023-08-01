@@ -13,6 +13,8 @@
   "you_guess_word": "You guess word",
   "you_dont_guess_word": "You don't guess word",
   "start": "Start",
+  "unknown_word": "Unknown word",
+  "try_another_one": "Try another one",
   "wait_until_game_is_loaded": "Wait until game is loaded",
   "guesses": {
     "one": "with {} guess",

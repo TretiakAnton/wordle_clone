@@ -6,7 +6,8 @@ import 'package:wordle_clone/core/constants.dart';
 import 'package:wordle_clone/generated/locale_keys.g.dart';
 import 'package:wordle_clone/presentation/state_management/game_bloc/game_cubit.dart';
 import 'package:wordle_clone/presentation/state_management/settings_bloc/settings_cubit.dart';
-import 'package:wordle_clone/presentation/view/widgets/game_results_dialogs.dart';
+import 'package:wordle_clone/presentation/view/widgets/dialogs/game_results_dialogs.dart';
+import 'package:wordle_clone/presentation/view/widgets/dialogs/unknown_word_dialog.dart';
 import 'package:wordle_clone/presentation/view/widgets/letters_field.dart';
 
 class GameScreen extends StatelessWidget {
@@ -28,7 +29,6 @@ class GameScreen extends StatelessWidget {
             builder: (context, snapshot) {
               if (snapshot.connectionState == ConnectionState.done) {
                 return _GameContent(
-                  bloc: bloc,
                   textEditingControllers: _fillControllers(length: bloc.numberOfLetters + 1),
                 );
               } else {
@@ -51,11 +51,9 @@ class GameScreen extends StatelessWidget {
 }
 
 class _GameContent extends StatefulWidget {
-  final GameCubit bloc;
   final List<TextEditingController> textEditingControllers;
 
   const _GameContent({
-    required this.bloc,
     required this.textEditingControllers,
     Key? key,
   }) : super(key: key);
@@ -69,7 +67,7 @@ class _GameContentState extends State<_GameContent> {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = widget.bloc;
+    final bloc = context.read<GameCubit>();
 
     return BlocConsumer<GameCubit, GameState>(
       listener: (context, state) {
@@ -86,6 +84,11 @@ class _GameContentState extends State<_GameContent> {
             isWin: true,
             result: state.result,
             onExit: () => _onExit(),
+          );
+        } else if (state is GameWordUnknown) {
+          showUnknownWordDialog(
+            context: context,
+            word: state.word,
           );
         }
       },
@@ -127,7 +130,10 @@ class _GameContentState extends State<_GameContent> {
               onPressed: () async {
                 if (_wordGuess.length == bloc.numberOfLetters) {
                   FocusScope.of(context).unfocus();
-                  bloc.guess(_wordGuess);
+                  await bloc.guess(
+                    word: _wordGuess,
+                    isEn: context.read<SettingsCubit>().selectedWordLanguage.languageCode == 'en',
+                  );
                 }
               },
               child: Text(LocaleKeys.guess.tr()),
@@ -140,7 +146,7 @@ class _GameContentState extends State<_GameContent> {
   }
 
   void _onExit() {
-    widget.bloc.clean(context);
+    context.read<GameCubit>().clean(context);
     context.router.popUntilRoot();
   }
 }

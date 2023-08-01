@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:wordle_clone/core/constants.dart';
 import 'package:wordle_clone/domain/model/game_result.dart';
 import 'package:wordle_clone/generated/locale_keys.g.dart';
 
@@ -39,13 +40,19 @@ class _EndGameDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(10.0),
       child: Column(
         mainAxisSize: MainAxisSize.min,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(isWin ? LocaleKeys.you_win.tr() : LocaleKeys.you_loose.tr()),
+          SizedBox(
+            height: verticalPadding(context: context, pixels: 10),
+          ),
           Text('${isWin ? LocaleKeys.you_guess_word.tr() : LocaleKeys.you_dont_guess_word.tr()}: ${result.word}'),
+          SizedBox(
+            height: verticalPadding(context: context, pixels: 10),
+          ),
           Text(LocaleKeys.guesses.plural(result.guessesMade)),
           TextButton(
             onPressed: () {

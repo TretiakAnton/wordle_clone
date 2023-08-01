@@ -7,6 +7,12 @@ class GameInitial extends GameState {}
 
 class GameLoading extends GameState {}
 
+class GameWordUnknown extends GameState {
+  final String word;
+
+  GameWordUnknown(this.word);
+}
+
 class GameReady extends GameState {}
 
 class GameGuessMade extends GameState {}
