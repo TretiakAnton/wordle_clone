@@ -5,7 +5,7 @@ import 'package:wordle_clone/core/navigation/app_router.dart';
 import 'package:wordle_clone/presentation/state_management/game_bloc/game_cubit.dart';
 import 'package:wordle_clone/presentation/state_management/login_bloc/login_cubit.dart';
 import 'package:wordle_clone/presentation/state_management/menu_bloc/menu_cubit.dart';
-import 'package:wordle_clone/presentation/state_management/seetings_bloc/settings_cubit.dart';
+import 'package:wordle_clone/presentation/state_management/settings_bloc/settings_cubit.dart';
 import 'presentation/state_management/registration_bloc/registration_cubit.dart';
 
 final GlobalKey<ScaffoldMessengerState> materialAppKey = GlobalKey<ScaffoldMessengerState>();

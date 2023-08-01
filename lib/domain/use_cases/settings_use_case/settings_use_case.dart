@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wordle_clone/data/repository/settings_repository.dart';
-import 'package:wordle_clone/presentation/state_management/seetings_bloc/settings_cubit.dart';
+import 'package:wordle_clone/presentation/state_management/settings_bloc/settings_cubit.dart';
 
 class SettingsUseCase {
   final SettingsRepository _repository = SettingsRepository();

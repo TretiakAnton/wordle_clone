@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -92,7 +93,8 @@ class MenuDataSource {
         String word = doc.data()['word'] as String;
         words.add(word);
       }
-      result[lengthOfWordsToRefill[index]] = words;
+      words.shuffle(Random());
+      result[lengthOfWordsToRefill[index]] = words.take(_amount).toList();
     }
     return result;
   }

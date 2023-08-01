@@ -6,6 +6,7 @@ import 'package:wordle_clone/core/constants.dart';
 import 'package:wordle_clone/core/navigation/routes.dart';
 import 'package:wordle_clone/generated/locale_keys.g.dart';
 import 'package:wordle_clone/presentation/state_management/menu_bloc/menu_cubit.dart';
+import 'package:wordle_clone/presentation/state_management/settings_bloc/settings_cubit.dart';
 import 'package:wordle_clone/presentation/view/widgets/menu_drawer.dart';
 
 class MenuScreen extends StatelessWidget {
@@ -34,8 +35,14 @@ class MenuScreen extends StatelessWidget {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          //Text(state.toString()),
                           const Spacer(),
+                          Text(_menuTitle(context.watch<SettingsCubit>().selectedWordLanguage)),
+                          SizedBox(
+                            height: verticalPadding(
+                              context: context,
+                              pixels: 20,
+                            ),
+                          ),
                           OutlinedButton(
                             onPressed: () {
                               bloc.numberOfLetters = 4;
@@ -63,7 +70,7 @@ class MenuScreen extends StatelessWidget {
                             ),
                           ),
                           Visibility(
-                            visible: context.locale.languageCode == 'en',
+                            visible: context.watch<SettingsCubit>().selectedWordLanguage.languageCode == 'en',
                             child: OutlinedButton(
                               onPressed: () => bloc.numberOfLetters = 6,
                               style: OutlinedButton.styleFrom(
@@ -81,11 +88,11 @@ class MenuScreen extends StatelessWidget {
                                 }
                               },
                               child: bloc.isWordsLoaded
-                                  ? const Text('Start')
+                                  ? Text(LocaleKeys.start.tr())
                                   : Row(
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
-                                        const Text('Wait until game is loaded'),
+                                        Text(LocaleKeys.wait_until_game_is_loaded.tr()),
                                         SizedBox(
                                           width: horizontalPadding(context: context, pixels: 10),
                                         ),
@@ -114,5 +121,11 @@ class MenuScreen extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _menuTitle(Locale locale) {
+    final result =
+        '${locale.languageCode == 'en' ? LocaleKeys.english.tr() : LocaleKeys.ukrainian.tr()} ${LocaleKeys.version.tr()}';
+    return result;
   }
 }

@@ -1,6 +1,7 @@
 {
   "english": "English",
   "ukrainian": "Ukrainian",
+  "version": "version",
   "confirm": "Confirm",
   "language": "Language",
   "guess": "Guess",
@@ -11,6 +12,8 @@
   "you_loose": "You loose",
   "you_guess_word": "You guess word",
   "you_dont_guess_word": "You don't guess word",
+  "start": "Start",
+  "wait_until_game_is_loaded": "Wait until game is loaded",
   "guesses": {
     "one": "with {} guess",
     "two": "with {} guesses",

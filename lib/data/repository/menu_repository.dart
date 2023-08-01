@@ -16,7 +16,7 @@ class MenuRepository with RepoLoggy {
   final BoxManager _boxManager = BoxManager();
 
   Future<Either<ServerFailure, List<CheckWordsResponse>>> checkWords() async {
-    await BoxManager().init();
+    //await BoxManager().init();
     try {
       final List<CheckWordsResponse> result = [];
       final List<bool> isEmptyList = [];

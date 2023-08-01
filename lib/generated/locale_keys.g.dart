@@ -3,6 +3,7 @@
 abstract class  LocaleKeys {
   static const english = 'english';
   static const ukrainian = 'ukrainian';
+  static const version = 'version';
   static const confirm = 'confirm';
   static const language = 'language';
   static const guess = 'guess';
@@ -13,6 +14,8 @@ abstract class  LocaleKeys {
   static const you_loose = 'you_loose';
   static const you_guess_word = 'you_guess_word';
   static const you_dont_guess_word = 'you_dont_guess_word';
+  static const start = 'start';
+  static const wait_until_game_is_loaded = 'wait_until_game_is_loaded';
   static const guesses = 'guesses';
   static const letter = 'letter';
   static const close = 'close';

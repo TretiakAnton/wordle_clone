@@ -17,6 +17,7 @@ class CodegenLoader extends AssetLoader{
   static const Map<String,dynamic> en_GB = {
   "english": "English",
   "ukrainian": "Ukrainian",
+  "version": "version",
   "confirm": "Confirm",
   "language": "Language",
   "guess": "Guess",
@@ -27,6 +28,8 @@ class CodegenLoader extends AssetLoader{
   "you_loose": "You loose",
   "you_guess_word": "You guess word",
   "you_dont_guess_word": "You don't guess word",
+  "start": "Start",
+  "wait_until_game_is_loaded": "Wait until game is loaded",
   "guesses": {
     "one": "with {} guess",
     "two": "with {} guesses",
@@ -49,6 +52,7 @@ class CodegenLoader extends AssetLoader{
 static const Map<String,dynamic> uk_UA = {
   "english": "Англійська",
   "ukrainian": "Українська",
+  "version": "версія",
   "confirm": "Підтвердити",
   "language": "Мова",
   "guess": "Вгадати",
@@ -59,6 +63,8 @@ static const Map<String,dynamic> uk_UA = {
   "you_loose": "Ви програли",
   "you_guess_word": "Ви вгадали слово",
   "you_dont_guess_word": "Ви не вгадали слово",
+  "start": "Розпочати",
+  "wait_until_game_is_loaded": "Зачекайте доки гра завантажиться",
   "guesses": {
     "one": "використавши {} спробу",
     "two": "використавши {} спроби",
