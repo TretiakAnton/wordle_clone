@@ -29,6 +29,8 @@ class CodegenLoader extends AssetLoader{
   "you_guess_word": "You guess word",
   "you_dont_guess_word": "You don't guess word",
   "start": "Start",
+  "unknown_word": "Unknown word",
+  "try_another_one": "Try another one",
   "wait_until_game_is_loaded": "Wait until game is loaded",
   "guesses": {
     "one": "with {} guess",
@@ -64,6 +66,8 @@ static const Map<String,dynamic> uk_UA = {
   "you_guess_word": "Ви вгадали слово",
   "you_dont_guess_word": "Ви не вгадали слово",
   "start": "Розпочати",
+  "unknown_word": "Невідоме слово",
+  "try_another_one": "Спробуйте інше",
   "wait_until_game_is_loaded": "Зачекайте доки гра завантажиться",
   "guesses": {
     "one": "використавши {} спробу",

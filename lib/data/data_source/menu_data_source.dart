@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:wordle_clone/core/constants.dart';
 import 'package:wordle_clone/data/entity/requests/menu/word_refill_request.dart';
 import 'package:http/http.dart' as http;
 import 'package:wordle_clone/data/entity/requests/menu/ua_words_request.dart';
@@ -15,7 +16,7 @@ class MenuDataSource {
   final _amount = 30;
 
   final String _baseUrl =
-      'https://api.wordnik.com/v4/words.json/randomWords?api_key=w01qji5soq8nxk76xt4033rteyol99vuqd01uqngotia83wi0&partOfSpeech=noun&hasExamples=true&hasDictionaryDef=true&isStrict=true';
+      'https://api.wordnik.com/v4/words.json/randomWords?api_key=$apiKey&partOfSpeech=noun&hasExamples=true&hasDictionaryDef=true&isStrict=true&minCorpusCount=10000';
 
   Future<GetWordsResponse> refillWords({required List<WordRefillRequest> requests}) async {
     final GetWordsResponse result = GetWordsResponse();
@@ -45,7 +46,8 @@ class MenuDataSource {
     }
     for (int index = 0; index < lengthOfWordsToRefill.length; index++) {
       final length = lengthOfWordsToRefill[index];
-      final response = await http.get(Uri.parse('$_baseUrl&minLength=$length&maxLength=$length&limit=$_amount'));
+      final url = Uri.parse('$_baseUrl&minLength=$length&maxLength=$length&limit=$_amount');
+      final response = await http.get(url);
       final words = _parseEnFromJson(response);
       result[lengthOfWordsToRefill[index]] = words;
     }

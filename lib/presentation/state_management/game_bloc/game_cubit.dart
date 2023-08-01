@@ -24,8 +24,13 @@ class GameCubit extends Cubit<GameState> {
     _guessesMade = _guessesMade += 1;
   }
 
-  void guess(String word) async {
+  Future<void> guess({required String word, required bool isEn}) async {
     emit(GameLoading());
+    final isValid = await _useCase.checkValidityOfWord(word: word, isEn: isEn);
+    if (!isValid) {
+      emit(GameWordUnknown(word));
+      return;
+    }
     final guessResult = _useCase.makeGuess(guess: word);
     if (guessResult) {
       _incrementGuessesMade();

@@ -15,6 +15,8 @@ abstract class  LocaleKeys {
   static const you_guess_word = 'you_guess_word';
   static const you_dont_guess_word = 'you_dont_guess_word';
   static const start = 'start';
+  static const unknown_word = 'unknown_word';
+  static const try_another_one = 'try_another_one';
   static const wait_until_game_is_loaded = 'wait_until_game_is_loaded';
   static const guesses = 'guesses';
   static const letter = 'letter';

@@ -19,6 +19,9 @@ double horizontalPadding({
   return result;
 }
 
+//TODO hide
+String apiKey ='w01qji5soq8nxk76xt4033rteyol99vuqd01uqngotia83wi0';
+
 ///1px of total height from iphone 14
 double _onePxHeightCoefficient = .00118;
 

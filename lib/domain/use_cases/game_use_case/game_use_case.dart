@@ -49,4 +49,8 @@ class GameUseCase {
     secretWord = null;
     result.clear();
   }
+
+  Future<bool> checkValidityOfWord({required String word, required bool isEn}) async {
+    return await _repository.checkValidityOfWord(word: word, isEn: isEn);
+  }
 }

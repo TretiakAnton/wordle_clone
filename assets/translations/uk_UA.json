@@ -13,6 +13,8 @@
   "you_guess_word": "Ви вгадали слово",
   "you_dont_guess_word": "Ви не вгадали слово",
   "start": "Розпочати",
+  "unknown_word": "Невідоме слово",
+  "try_another_one": "Спробуйте інше",
   "wait_until_game_is_loaded": "Зачекайте доки гра завантажиться",
   "guesses": {
     "one": "використавши {} спробу",
