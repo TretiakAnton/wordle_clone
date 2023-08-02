@@ -7,15 +7,20 @@ import 'package:wordle_clone/presentation/view/screens/menu_screen.dart';
 import 'package:wordle_clone/presentation/view/screens/registration_screen.dart';
 import 'package:wordle_clone/presentation/view/screens/settings/interface_language_screen.dart';
 import 'package:wordle_clone/presentation/view/screens/settings/words_language_screen.dart';
+import 'package:wordle_clone/presentation/view/screens/splash_screen.dart';
 
 part 'app_router.gr.dart';
 
 @MaterialAutoRouter(
   routes: <AutoRoute>[
     AutoRoute(
+      page: SplashScreen,
+      path: Routes.splashScreen,
+      initial: true,
+    ),
+    AutoRoute(
       page: LoginScreen,
       path: Routes.loginScreen,
-      initial: true,
     ),
     AutoRoute(
       page: RegistrationScreen,

@@ -5,20 +5,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wordle_clone/core/constants.dart';
 import 'package:wordle_clone/core/navigation/app_router.dart';
 import 'package:wordle_clone/generated/locale_keys.g.dart';
-import 'package:wordle_clone/presentation/state_management/registration_bloc/registration_cubit.dart';
+import 'package:wordle_clone/presentation/state_management/auth_bloc/auth_state.dart';
+import 'package:wordle_clone/presentation/state_management/auth_bloc/registration_cubit.dart';
 
 class RegistrationScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  RegistrationScreen({super.key});
+  RegistrationScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<RegistrationCubit>();
-    return BlocConsumer<RegistrationCubit, RegistrationState>(
+    return BlocConsumer<RegistrationCubit, AuthState>(
       listener: (context, state) {
-        if (state is RegistrationCompleted) {
+        if (state is AuthCompleted) {
           WidgetsBinding.instance.addPostFrameCallback(
             (_) => context.router.pushAndPopUntil(
               const MenuScreenRoute(),
@@ -65,7 +66,7 @@ class RegistrationScreen extends StatelessWidget {
                         password: passwordController.text,
                       );
                     },
-                    child: state is RegistrationInProgress
+                    child: state is AuthInProgress
                         ? const CircularProgressIndicator()
                         : Text(LocaleKeys.register.tr()),
                   ),

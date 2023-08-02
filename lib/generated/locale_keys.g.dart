@@ -18,6 +18,11 @@ abstract class  LocaleKeys {
   static const unknown_word = 'unknown_word';
   static const try_another_one = 'try_another_one';
   static const wait_until_game_is_loaded = 'wait_until_game_is_loaded';
+  static const welcome_to_wordle = 'welcome_to_wordle';
+  static const log_out = 'log_out';
+  static const are_you_sure_you_want_to_log_out = 'are_you_sure_you_want_to_log_out';
+  static const yes = 'yes';
+  static const no = 'no';
   static const guesses = 'guesses';
   static const letter = 'letter';
   static const close = 'close';

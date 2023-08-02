@@ -6,10 +6,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:wordle_clone/core/constants.dart';
 import 'package:wordle_clone/core/navigation/routes.dart';
 import 'package:wordle_clone/generated/locale_keys.g.dart';
-import 'package:wordle_clone/presentation/state_management/login_bloc/login_cubit.dart';
+import 'package:wordle_clone/presentation/state_management/auth_bloc/auth_state.dart';
+import 'package:wordle_clone/presentation/state_management/auth_bloc/login_cubit.dart';
 
 class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+  LoginScreen({Key? key}) : super(key: key);
 
   final TextEditingController emailController = TextEditingController(text: 'qwe@qwe.com');
   final TextEditingController passwordController = TextEditingController(text: 'test12');
@@ -17,9 +18,9 @@ class LoginScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final bloc = context.read<LoginCubit>();
-    return BlocConsumer<LoginCubit, LoginState>(
+    return BlocConsumer<LoginCubit, AuthState>(
       listener: (context, state) {
-        if (state is LoginCompleted) {
+        if (state is AuthCompleted) {
           WidgetsBinding.instance.addPostFrameCallback((_) => context.router.replaceNamed(Routes.menuScreen));
         }
       },
@@ -61,7 +62,7 @@ class LoginScreen extends StatelessWidget {
                         password: passwordController.text,
                       );
                     },
-                    child: state is LoginInProgress ? const CircularProgressIndicator() : Text(LocaleKeys.login.tr()),
+                    child: state is AuthInProgress ? const CircularProgressIndicator() : Text(LocaleKeys.login.tr()),
                   ),
                   SizedBox(
                     height: verticalPadding(
