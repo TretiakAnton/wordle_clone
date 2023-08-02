@@ -1,7 +1,6 @@
-import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:wordle_clone/core/navigation/app_router.dart';
+import 'package:wordle_clone/material_app.dart';
 import 'package:wordle_clone/presentation/state_management/game_bloc/game_cubit.dart';
 import 'package:wordle_clone/presentation/state_management/menu_bloc/menu_cubit.dart';
 import 'package:wordle_clone/presentation/state_management/settings_bloc/settings_cubit.dart';
@@ -9,11 +8,14 @@ import 'package:wordle_clone/presentation/state_management/splash_bloc/splash_cu
 import 'presentation/state_management/auth_bloc/login_cubit.dart';
 import 'presentation/state_management/auth_bloc/registration_cubit.dart';
 
-final GlobalKey<ScaffoldMessengerState> materialAppKey = GlobalKey<ScaffoldMessengerState>();
+class WordleApp extends StatefulWidget {
+  const WordleApp({Key? key}) : super(key: key);
 
-class WordleApp extends StatelessWidget {
-  WordleApp({Key? key}) : super(key: key);
-  final _appRouter = AppRouter();
+  @override
+  State<WordleApp> createState() => _WordleAppState();
+}
+
+class _WordleAppState extends State<WordleApp> {
 
   @override
   Widget build(BuildContext context) {
@@ -26,18 +28,7 @@ class WordleApp extends StatelessWidget {
         BlocProvider<SettingsCubit>(create: (context) => SettingsCubit()),
         BlocProvider<SplashCubit>(create: (context) => SplashCubit()),
       ],
-      child: MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        scaffoldMessengerKey: materialAppKey,
-        theme: ThemeData(
-          primarySwatch: Colors.deepPurple,
-        ),
-        locale: context.locale,
-        supportedLocales: context.supportedLocales,
-        localizationsDelegates: context.localizationDelegates,
-        routerDelegate: _appRouter.delegate(),
-        routeInformationParser: _appRouter.defaultRouteParser(),
-      ),
+      child: const MaterialWordleApp(),
     );
   }
 }

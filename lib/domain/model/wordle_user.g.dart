@@ -8,7 +8,7 @@ part of 'wordle_user.dart';
 
 class WordleUserAdapter extends TypeAdapter<WordleUser> {
   @override
-  final int typeId = 0;
+  final int typeId = 1;
 
   @override
   WordleUser read(BinaryReader reader) {

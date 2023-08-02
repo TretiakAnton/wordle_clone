@@ -23,6 +23,10 @@ abstract class  LocaleKeys {
   static const are_you_sure_you_want_to_log_out = 'are_you_sure_you_want_to_log_out';
   static const yes = 'yes';
   static const no = 'no';
+  static const choose_color_scheme = 'choose_color_scheme';
+  static const color_scheme = 'color_scheme';
+  static const light = 'light';
+  static const dark = 'dark';
   static const guesses = 'guesses';
   static const letter = 'letter';
   static const close = 'close';

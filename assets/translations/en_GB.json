@@ -21,6 +21,10 @@
   "are_you_sure_you_want_to_log_out": "Are you sure you want to log out?",
   "yes": "Yes",
   "no": "No",
+  "choose_color_scheme": "Choose color scheme",
+  "color_scheme": "Color scheme",
+  "light": "Light",
+  "dark": "Dark",
   "guesses": {
     "one": "with {} guess",
     "two": "with {} guesses",

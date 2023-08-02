@@ -53,4 +53,20 @@ class SettingsRepository with RepoLoggy {
     }
   }
 
+  Future<Either<ServerFailure, void>> setTheme(ThemeMode brightness) async {
+    try {
+      await _boxManager.setTheme(brightness);
+      return const Right(null);
+    } on Exception catch (e) {
+      return Left(ServerFailure(errorMessage: e.toString()));
+    }
+  }
+  Either<ServerFailure, ThemeMode> getTheme() {
+    try {
+      final ThemeMode selectedLocale = _boxManager.getTheme();
+      return Right(selectedLocale);
+    } on Exception catch (e) {
+      return Left(ServerFailure(errorMessage: e.toString()));
+    }
+  }
 }

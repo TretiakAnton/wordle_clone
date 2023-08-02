@@ -36,20 +36,23 @@ class MenuScreen extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           const Spacer(),
-                          Text(_menuTitle(context.watch<SettingsCubit>().selectedWordLanguage)),
+                          Text(
+                            _menuTitle(context.watch<SettingsCubit>().selectedWordLanguage),
+                            style: Theme.of(context).textTheme.displayMedium,
+                          ),
                           SizedBox(
                             height: verticalPadding(
                               context: context,
                               pixels: 20,
                             ),
                           ),
-                          OutlinedButton(
+                          _selectableButton(
                             onPressed: () {
                               bloc.numberOfLetters = 4;
                             },
-                            style: OutlinedButton.styleFrom(
-                                backgroundColor: bloc.isSelected(4) ? Colors.blue : Colors.grey),
-                            child: Text(LocaleKeys.letter.plural(4)),
+                            isSelected: bloc.isSelected(4),
+                            title: LocaleKeys.letter.plural(4),
+                            context: context,
                           ),
                           SizedBox(
                             height: verticalPadding(
@@ -57,11 +60,13 @@ class MenuScreen extends StatelessWidget {
                               pixels: 20,
                             ),
                           ),
-                          OutlinedButton(
-                            onPressed: () => bloc.numberOfLetters = 5,
-                            style: OutlinedButton.styleFrom(
-                                backgroundColor: bloc.isSelected(5) ? Colors.blue : Colors.grey),
-                            child: Text(LocaleKeys.letter.plural(5)),
+                          _selectableButton(
+                            onPressed: () {
+                              bloc.numberOfLetters = 5;
+                            },
+                            isSelected: bloc.isSelected(5),
+                            title: LocaleKeys.letter.plural(5),
+                            context: context,
                           ),
                           SizedBox(
                             height: verticalPadding(
@@ -71,11 +76,13 @@ class MenuScreen extends StatelessWidget {
                           ),
                           Visibility(
                             visible: context.watch<SettingsCubit>().selectedWordLanguage.languageCode == 'en',
-                            child: OutlinedButton(
-                              onPressed: () => bloc.numberOfLetters = 6,
-                              style: OutlinedButton.styleFrom(
-                                  backgroundColor: bloc.isSelected(6) ? Colors.blue : Colors.grey),
-                              child: Text(LocaleKeys.letter.plural(6)),
+                            child: _selectableButton(
+                              onPressed: () {
+                                bloc.numberOfLetters = 6;
+                              },
+                              isSelected: bloc.isSelected(6),
+                              title: LocaleKeys.letter.plural(6),
+                              context: context,
                             ),
                           ),
                           const Spacer(),
@@ -119,6 +126,24 @@ class MenuScreen extends StatelessWidget {
             },
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _selectableButton({
+    required VoidCallback onPressed,
+    required String title,
+    required bool isSelected,
+    required BuildContext context,
+  }) {
+    return OutlinedButton(
+      onPressed: () => onPressed(),
+      style: OutlinedButton.styleFrom(
+        backgroundColor: isSelected ? Theme.of(context).secondaryHeaderColor : Theme.of(context).hoverColor,
+      ),
+      child: Text(
+        title,
+        style: Theme.of(context).textTheme.titleMedium,
       ),
     );
   }

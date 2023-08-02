@@ -62,7 +62,13 @@ class LoginScreen extends StatelessWidget {
                         password: passwordController.text,
                       );
                     },
-                    child: state is AuthInProgress ? const CircularProgressIndicator() : Text(LocaleKeys.login.tr()),
+                    child: state is AuthInProgress
+                        ? const CircularProgressIndicator()
+                        : Text(
+                            LocaleKeys.login.tr(),
+                            style:
+                                Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).primaryColor),
+                          ),
                   ),
                   SizedBox(
                     height: verticalPadding(

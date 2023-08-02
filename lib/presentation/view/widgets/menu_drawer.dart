@@ -35,6 +35,13 @@ class MenuDrawer extends StatelessWidget {
             },
           ),
           ListTile(
+            leading: const Icon(Icons.brightness_6),
+            title: Text(LocaleKeys.color_scheme.tr()),
+            onTap: () {
+              context.router.pushNamed(Routes.colorSchemeScreen);
+            },
+          ),
+          ListTile(
             leading: const Icon(Icons.logout),
             title: Text(LocaleKeys.log_out.tr()),
             onTap: () async {

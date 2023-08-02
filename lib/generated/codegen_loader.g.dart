@@ -37,6 +37,10 @@ class CodegenLoader extends AssetLoader{
   "are_you_sure_you_want_to_log_out": "Are you sure you want to log out?",
   "yes": "Yes",
   "no": "No",
+  "choose_color_scheme": "Choose color scheme",
+  "color_scheme": "Color scheme",
+  "light": "Light",
+  "dark": "Dark",
   "guesses": {
     "one": "with {} guess",
     "two": "with {} guesses",
@@ -79,6 +83,10 @@ static const Map<String,dynamic> uk_UA = {
   "are_you_sure_you_want_to_log_out": "Ви впевнені що хочете вийти?",
   "yes": "Так",
   "no": "Ні",
+  "choose_color_scheme": "Оберіть тему",
+  "color_scheme": "Кольорова тема",
+  "light": "Світла",
+  "dark": "Темна",
   "guesses": {
     "one": "використавши {} спробу",
     "two": "використавши {} спроби",

@@ -5,6 +5,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:loggy/loggy.dart';
 import 'package:wordle_clone/data/data_source/box_manager.dart';
 import 'package:wordle_clone/data/entity/locale.g.dart';
+import 'package:wordle_clone/data/entity/theme_mode.g.dart';
 import 'package:wordle_clone/data/entity/word_list.dart';
 import 'package:wordle_clone/domain/model/wordle_user.dart';
 import 'package:wordle_clone/firebase_options.dart';
@@ -19,13 +20,14 @@ Future<void> main() async {
   await EasyLocalization.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await _initHive();
-  runApp(EasyLocalizationWidget(widget: WordleApp()));
+  runApp(const EasyLocalizationWidget(widget: WordleApp()));
 }
 
 _initHive() async {
   await Hive.initFlutter();
   Hive.registerAdapter(WordListAdapter());
-  Hive.registerAdapter(LocaleAdapter());
   Hive.registerAdapter(WordleUserAdapter());
+  Hive.registerAdapter(ThemeModeAdapter());
+  Hive.registerAdapter(LocaleAdapter());
   await BoxManager().init();
 }

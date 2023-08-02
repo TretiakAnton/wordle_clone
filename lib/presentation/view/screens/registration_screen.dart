@@ -68,7 +68,11 @@ class RegistrationScreen extends StatelessWidget {
                     },
                     child: state is AuthInProgress
                         ? const CircularProgressIndicator()
-                        : Text(LocaleKeys.register.tr()),
+                        : Text(
+                            LocaleKeys.register.tr(),
+                            style:
+                                Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).primaryColor),
+                          ),
                   ),
                   const Spacer(),
                 ],

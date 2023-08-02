@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:wordle_clone/data/entity/word_list.dart';
 import 'package:wordle_clone/domain/model/wordle_user.dart';
@@ -110,6 +111,18 @@ class BoxManager {
   Future<void> setWordsLanguage(Locale selected) async {
     return await _settingsBox.put(_keyManager.keyWordsLanguage, selected);
   }
+
+  Future<void>  setTheme(ThemeMode brightness)async {
+    return await _settingsBox.put(_keyManager.keyBrightness, brightness);
+  }
+  ThemeMode getTheme() {
+    ThemeMode? selectedTheme = _settingsBox.get(_keyManager.keyBrightness);
+    if (selectedTheme == null) {
+      selectedTheme = ThemeMode.system;
+      _settingsBox.put(_keyManager.keyBrightness, selectedTheme);
+    }
+    return selectedTheme;
+  }
 }
 
 class _KeyManager {
@@ -117,6 +130,7 @@ class _KeyManager {
   final String key5Letters = '5Letters';
   final String key6Letters = '6Letters';
   final String keyCurrentUser = 'currentUser';
+  final String keyBrightness = 'brightness';
   final String keyWordsLanguage = 'wordsLanguage';
   final String keySelectedWordsLanguage = 'selectedWordsLanguage';
 }

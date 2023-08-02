@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wordle_clone/wordle_app.dart';
+import 'package:wordle_clone/material_app.dart';
 
 class OrdinarySnackbar {
   void showSnackBar({

@@ -2,7 +2,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 part 'word_list.g.dart';
 
-@HiveType(typeId: 1)
+@HiveType(typeId: 0)
 class WordList {
   WordList({required this.name, required this.words});
 
