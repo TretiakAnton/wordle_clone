@@ -28,4 +28,8 @@ class LoginCubit extends Cubit<AuthState> {
     }
     emit(resultState);
   }
+
+  Future<bool> logOut() async {
+    return await _useCase.logOut();
+  }
 }

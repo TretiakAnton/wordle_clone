@@ -3,6 +3,7 @@ import 'package:wordle_clone/domain/model/login_email_request.dart';
 import 'package:wordle_clone/domain/model/wordle_user.dart';
 import 'package:wordle_clone/domain/translator/auth_translator/auth_translator.dart';
 import 'package:wordle_clone/presentation/state_management/auth_bloc/auth_state.dart';
+import 'package:wordle_clone/presentation/view/widgets/snackbars.dart';
 
 class AuthUseCase {
   final AuthRepository _repository = AuthRepository();
@@ -42,5 +43,25 @@ class AuthUseCase {
       (r) => result = AuthCompleted(),
     );
     return result;
+  }
+
+  Future<bool> logOut() async {
+    bool isLogoutSuccessful = false;
+    final deleteResult = await _repository.deleteUser();
+    deleteResult.fold(
+      (l) => OrdinarySnackbar().showSnackBar(label: l.errorMessage ?? 'Error'),
+      (r) => isLogoutSuccessful = true,
+    );
+    if (isLogoutSuccessful) {
+      final logOutResult = await _repository.logOut();
+      logOutResult.fold(
+        (l) {
+          isLogoutSuccessful = false;
+          OrdinarySnackbar().showSnackBar(label: l.errorMessage ?? 'Error');
+        },
+        (r) => null,
+      );
+    }
+    return isLogoutSuccessful;
   }
 }

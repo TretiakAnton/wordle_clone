@@ -50,4 +50,28 @@ class AuthRepository with RepoLoggy {
       return Left(ServerFailure(errorMessage: 'An unknown error occurred'));
     }
   }
+
+  Future<Either<ServerFailure, void>> deleteUser() async {
+    try {
+      final result = await _boxManager.deleteCurrentUser();
+      return Right(result);
+    } on CustomException catch (e) {
+      return Left(ServerFailure(errorMessage: e.message));
+    } catch (e) {
+      return Left(ServerFailure(errorMessage: 'An unknown error occurred'));
+    }
+  }
+
+  Future<Either<ServerFailure, void>> logOut() async{
+    try {
+      final result = await _source.logOut();
+      return Right(result);
+    } on FirebaseAuthException catch (e) {
+      return Left(ServerFailure(errorMessage: e.message));
+    } on CustomException catch (e) {
+      return Left(ServerFailure(errorMessage: e.message));
+    } catch (e) {
+      return Left(ServerFailure(errorMessage: 'An unknown error occurred'));
+    }
+  }
 }

@@ -15,4 +15,8 @@ class AuthDataSource {
       password: request.password,
     );
   }
+
+  Future<void> logOut() async {
+    return await FirebaseAuth.instance.signOut();
+  }
 }

@@ -3,6 +3,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:wordle_clone/core/navigation/routes.dart';
 import 'package:wordle_clone/generated/locale_keys.g.dart';
+import 'package:wordle_clone/presentation/view/widgets/dialogs/log_out_screen.dart';
 
 class MenuDrawer extends StatelessWidget {
   const MenuDrawer({Key? key}) : super(key: key);
@@ -31,6 +32,13 @@ class MenuDrawer extends StatelessWidget {
             title: Text(LocaleKeys.words_language.tr()),
             onTap: () {
               context.router.pushNamed(Routes.wordsLanguageScreen);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.logout),
+            title: Text(LocaleKeys.log_out.tr()),
+            onTap: () async {
+              await showLogOutDialog(context: context);
             },
           ),
         ],
