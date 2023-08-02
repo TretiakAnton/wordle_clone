@@ -16,6 +16,7 @@
   "unknown_word": "Невідоме слово",
   "try_another_one": "Спробуйте інше",
   "wait_until_game_is_loaded": "Зачекайте доки гра завантажиться",
+  "welcome_to_wordle": "Ласкаво просимо до Wordle!",
   "guesses": {
     "one": "використавши {} спробу",
     "two": "використавши {} спроби",

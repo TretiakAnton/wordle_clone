@@ -17,6 +17,12 @@ class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
+    SplashScreenRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const SplashScreen(),
+      );
+    },
     LoginScreenRoute.name: (routeData) {
       final args = routeData.argsAs<LoginScreenRouteArgs>(
           orElse: () => const LoginScreenRouteArgs());
@@ -64,8 +70,12 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           '/#redirect',
           path: '/',
-          redirectTo: '/login_screen',
+          redirectTo: '/splash_screen',
           fullMatch: true,
+        ),
+        RouteConfig(
+          SplashScreenRoute.name,
+          path: '/splash_screen',
         ),
         RouteConfig(
           LoginScreenRoute.name,
@@ -92,6 +102,18 @@ class _$AppRouter extends RootStackRouter {
           path: '/interface_language_screen',
         ),
       ];
+}
+
+/// generated route for
+/// [SplashScreen]
+class SplashScreenRoute extends PageRouteInfo<void> {
+  const SplashScreenRoute()
+      : super(
+          SplashScreenRoute.name,
+          path: '/splash_screen',
+        );
+
+  static const String name = 'SplashScreenRoute';
 }
 
 /// generated route for

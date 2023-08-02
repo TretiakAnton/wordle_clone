@@ -32,6 +32,7 @@ class CodegenLoader extends AssetLoader{
   "unknown_word": "Unknown word",
   "try_another_one": "Try another one",
   "wait_until_game_is_loaded": "Wait until game is loaded",
+  "welcome_to_wordle": "Welcome to Wordle!",
   "guesses": {
     "one": "with {} guess",
     "two": "with {} guesses",
@@ -69,6 +70,7 @@ static const Map<String,dynamic> uk_UA = {
   "unknown_word": "Невідоме слово",
   "try_another_one": "Спробуйте інше",
   "wait_until_game_is_loaded": "Зачекайте доки гра завантажиться",
+  "welcome_to_wordle": "Ласкаво просимо до Wordle!",
   "guesses": {
     "one": "використавши {} спробу",
     "two": "використавши {} спроби",

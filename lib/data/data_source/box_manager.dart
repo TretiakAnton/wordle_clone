@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:wordle_clone/data/entity/word_list.dart';
+import 'package:wordle_clone/domain/model/wordle_user.dart';
 
 class BoxManager {
   static final BoxManager _instance = BoxManager._internal();
@@ -11,6 +12,7 @@ class BoxManager {
   late Box _enWordsBox;
   late Box _uaWordsBox;
   late Box _settingsBox;
+  late Box _credentialsBox;
 
   factory BoxManager() {
     return _instance;
@@ -25,12 +27,25 @@ class BoxManager {
     _uaWordsBox = await Hive.openBox('uaWordsBox');
     _enWordsBox = await Hive.openBox('enWordsBox');
     _settingsBox = await Hive.openBox('settingsBox');
+    _credentialsBox = await Hive.openBox('credentialsBox');
     await _initLanguages();
     _isInited = true;
   }
 
+  WordleUser? getCurrentUser() {
+    return _credentialsBox.get(_keyManager.keyCurrentUser);
+  }
+
+  Future<void> saveUser(WordleUser user) async {
+    return await _credentialsBox.put(_keyManager.keyCurrentUser, user);
+  }
+
+  Future<void> deleteCurrentUser() async {
+    return await _credentialsBox.delete(_keyManager.keyCurrentUser);
+  }
+
   Future<void> _initLanguages() async {
-    const Locale uaLang =Locale('uk', 'UA');
+    const Locale uaLang = Locale('uk', 'UA');
     const Locale enLang = Locale('en', 'GB');
     await _settingsBox.put(_keyManager.keyWordsLanguage, [enLang, uaLang]);
   }
@@ -54,7 +69,7 @@ class BoxManager {
     return await wordBox.put(key, words);
   }
 
-  Future<String> getFromBox(Box wordBox, String key) async {
+  Future<String> getFromWordsBox(Box wordBox, String key) async {
     final WordList list = await wordBox.get(key);
     final word = list.words.removeAt(0);
     await wordBox.put(key, list);
@@ -63,7 +78,7 @@ class BoxManager {
 
   Future<String> getWordlistFromBox({required int length, required bool isEn}) async {
     final String key = _chooseWordsLengthKey(length: length);
-    return await getFromBox(isEn ? _enWordsBox : _uaWordsBox, key);
+    return await getFromWordsBox(isEn ? _enWordsBox : _uaWordsBox, key);
   }
 
   String _chooseWordsLengthKey({required int length}) {
@@ -101,6 +116,7 @@ class _KeyManager {
   final String key4Letters = '4Letters';
   final String key5Letters = '5Letters';
   final String key6Letters = '6Letters';
+  final String keyCurrentUser = 'currentUser';
   final String keyWordsLanguage = 'wordsLanguage';
   final String keySelectedWordsLanguage = 'selectedWordsLanguage';
 }

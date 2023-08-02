@@ -6,6 +6,7 @@ import 'package:loggy/loggy.dart';
 import 'package:wordle_clone/data/data_source/box_manager.dart';
 import 'package:wordle_clone/data/entity/locale.g.dart';
 import 'package:wordle_clone/data/entity/word_list.dart';
+import 'package:wordle_clone/domain/model/wordle_user.dart';
 import 'package:wordle_clone/firebase_options.dart';
 import 'package:wordle_clone/localization_widget.dart';
 import 'package:wordle_clone/wordle_app.dart';
@@ -25,5 +26,6 @@ _initHive() async {
   await Hive.initFlutter();
   Hive.registerAdapter(WordListAdapter());
   Hive.registerAdapter(LocaleAdapter());
+  Hive.registerAdapter(WordleUserAdapter());
   await BoxManager().init();
 }

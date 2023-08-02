@@ -1,4 +1,5 @@
 abstract class Routes {
+  static const splashScreen = '/splash_screen';
   static const loginScreen = '/login_screen';
   static const registrationScreen = '/registration_screen';
   static const menuScreen = '/menu_screen';
