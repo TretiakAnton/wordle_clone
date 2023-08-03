@@ -25,6 +25,11 @@
   "color_scheme": "Color scheme",
   "light": "Light",
   "dark": "Dark",
+  "email": "E-mail",
+  "password": "Password",
+  "confirm_password": "Confirm password",
+  "passwords_do_not_match": "Passwords don't match",
+  "hint": "Enter {} here",
   "guesses": {
     "one": "with {} guess",
     "two": "with {} guesses",

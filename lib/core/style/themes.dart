@@ -6,7 +6,7 @@ class WordleTheme {
   static final lightThemeData = ThemeData(
     primaryColor: Colors.deepPurple,
     secondaryHeaderColor: Colors.deepPurpleAccent,
-    //canvasColor: Colors.grey[100],
+    canvasColor: Colors.black,
     hoverColor:Colors.grey[300],
     scaffoldBackgroundColor: Colors.white,
     appBarTheme: const AppBarTheme(
@@ -38,7 +38,7 @@ class WordleTheme {
   static final darkThemeData = ThemeData(
     primaryColor: Colors.deepPurple,
     secondaryHeaderColor: Colors.pinkAccent,
-   // canvasColor: Colors.grey[900],
+    canvasColor: Colors.grey[50],
     hoverColor: Colors.grey[700],
     scaffoldBackgroundColor: Colors.grey[900],
     appBarTheme: const AppBarTheme(

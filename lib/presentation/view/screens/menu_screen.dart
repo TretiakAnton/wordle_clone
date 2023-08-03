@@ -19,7 +19,13 @@ class MenuScreen extends StatelessWidget {
       child: GestureDetector(
         onTap: () => bloc.numberOfLetters = null,
         child: Scaffold(
-          appBar: AppBar(),
+          appBar: AppBar(
+            centerTitle: true,
+            title: Text(
+              'Wordle'.toUpperCase(),
+              style: Theme.of(context).textTheme.displayMedium?.copyWith(color: Theme.of(context).hoverColor),
+            ),
+          ),
           drawer: const MenuDrawer(),
           body: BlocConsumer<MenuCubit, MenuState>(
             listener: (context, state) {

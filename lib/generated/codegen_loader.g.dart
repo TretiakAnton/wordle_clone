@@ -41,6 +41,11 @@ class CodegenLoader extends AssetLoader{
   "color_scheme": "Color scheme",
   "light": "Light",
   "dark": "Dark",
+  "email": "E-mail",
+  "password": "Password",
+  "confirm_password": "Confirm password",
+  "passwords_do_not_match": "Passwords don't match",
+  "hint": "Enter {} here",
   "guesses": {
     "one": "with {} guess",
     "two": "with {} guesses",
@@ -87,6 +92,11 @@ static const Map<String,dynamic> uk_UA = {
   "color_scheme": "Кольорова тема",
   "light": "Світла",
   "dark": "Темна",
+  "email": "E-mail",
+  "password": "Пароль",
+  "confirm_password": "Підтвердіть пароль",
+  "passwords_do_not_match": "Паролі не збігаються",
+  "hint": "Введіть {} сюди",
   "guesses": {
     "one": "використавши {} спробу",
     "two": "використавши {} спроби",

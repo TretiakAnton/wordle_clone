@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:wordle_clone/data/entity/word_list.dart';
@@ -109,7 +107,7 @@ class BoxManager {
   }
 
   Future<void> setWordsLanguage(Locale selected) async {
-    return await _settingsBox.put(_keyManager.keyWordsLanguage, selected);
+    return await _settingsBox.put(_keyManager.keySelectedWordsLanguage, selected);
   }
 
   Future<void>  setTheme(ThemeMode brightness)async {

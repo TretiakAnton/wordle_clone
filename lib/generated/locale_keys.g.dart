@@ -27,6 +27,11 @@ abstract class  LocaleKeys {
   static const color_scheme = 'color_scheme';
   static const light = 'light';
   static const dark = 'dark';
+  static const email = 'email';
+  static const password = 'password';
+  static const confirm_password = 'confirm_password';
+  static const passwords_do_not_match = 'passwords_do_not_match';
+  static const hint = 'hint';
   static const guesses = 'guesses';
   static const letter = 'letter';
   static const close = 'close';
