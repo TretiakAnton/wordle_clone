@@ -8,6 +8,7 @@ class SettingsUseCase {
   // final AuthTranslator _translator = AuthTranslator();
   Locale? _wordLocale;
   List<Locale>? _availableWordLocales;
+  ThemeMode? _theme;
 
   Locale get wordLocale {
     if (_wordLocale == null) {
@@ -21,6 +22,13 @@ class SettingsUseCase {
       _loadAvailableWordLocales();
     }
     return _availableWordLocales!;
+  }
+
+  ThemeMode get theme {
+    if (_theme == null) {
+      _loadTheme();
+    }
+    return _theme!;
   }
 
   SettingsState _loadSelectedWordsLanguage() {
@@ -59,4 +67,27 @@ class SettingsUseCase {
     return result;
   }
 
+  SettingsState _loadTheme() {
+    SettingsState result = SettingsInitial();
+    final response = _repository.getTheme();
+    response.fold((failure) async {
+      return result = SettingsFailed(failure.errorMessage);
+    }, (theme) async {
+      _theme = theme;
+      result = SettingsCompleted();
+    });
+    return result;
+  }
+
+  Future<SettingsState> setTheme(ThemeMode theme) async {
+    SettingsState result = SettingsInitial();
+    final response = await _repository.setTheme(theme);
+    response.fold((failure) {
+      return result = SettingsFailed(failure.errorMessage);
+    }, (_) async {
+      _theme = theme;
+      result = SettingsColorThemeChanged(themeMode: theme);
+    });
+    return result;
+  }
 }

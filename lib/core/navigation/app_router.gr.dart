@@ -51,6 +51,12 @@ class _$AppRouter extends RootStackRouter {
         child: const GameScreen(),
       );
     },
+    ColorSchemeScreenRoute.name: (routeData) {
+      return MaterialPageX<dynamic>(
+        routeData: routeData,
+        child: const ColorSchemeScreen(),
+      );
+    },
     WordsLanguageScreenRoute.name: (routeData) {
       return MaterialPageX<dynamic>(
         routeData: routeData,
@@ -92,6 +98,10 @@ class _$AppRouter extends RootStackRouter {
         RouteConfig(
           GameScreenRoute.name,
           path: '/game_screen',
+        ),
+        RouteConfig(
+          ColorSchemeScreenRoute.name,
+          path: '/color_scheme_screen',
         ),
         RouteConfig(
           WordsLanguageScreenRoute.name,
@@ -187,6 +197,18 @@ class GameScreenRoute extends PageRouteInfo<void> {
         );
 
   static const String name = 'GameScreenRoute';
+}
+
+/// generated route for
+/// [ColorSchemeScreen]
+class ColorSchemeScreenRoute extends PageRouteInfo<void> {
+  const ColorSchemeScreenRoute()
+      : super(
+          ColorSchemeScreenRoute.name,
+          path: '/color_scheme_screen',
+        );
+
+  static const String name = 'ColorSchemeScreenRoute';
 }
 
 /// generated route for

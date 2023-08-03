@@ -11,6 +11,7 @@ class MenuDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       child: ListView(
         padding: EdgeInsets.zero,
         children: <Widget>[
@@ -32,6 +33,13 @@ class MenuDrawer extends StatelessWidget {
             title: Text(LocaleKeys.words_language.tr()),
             onTap: () {
               context.router.pushNamed(Routes.wordsLanguageScreen);
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.brightness_6),
+            title: Text(LocaleKeys.color_scheme.tr()),
+            onTap: () {
+              context.router.pushNamed(Routes.colorSchemeScreen);
             },
           ),
           ListTile(

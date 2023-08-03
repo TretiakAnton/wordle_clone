@@ -8,7 +8,7 @@ part of 'word_list.dart';
 
 class WordListAdapter extends TypeAdapter<WordList> {
   @override
-  final int typeId = 1;
+  final int typeId = 0;
 
   @override
   WordList read(BinaryReader reader) {

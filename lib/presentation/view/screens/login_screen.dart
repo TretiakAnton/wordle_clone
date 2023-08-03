@@ -8,12 +8,13 @@ import 'package:wordle_clone/core/navigation/routes.dart';
 import 'package:wordle_clone/generated/locale_keys.g.dart';
 import 'package:wordle_clone/presentation/state_management/auth_bloc/auth_state.dart';
 import 'package:wordle_clone/presentation/state_management/auth_bloc/login_cubit.dart';
+import 'package:wordle_clone/presentation/view/widgets/input_widgets.dart';
 
 class LoginScreen extends StatelessWidget {
   LoginScreen({Key? key}) : super(key: key);
 
-  final TextEditingController emailController = TextEditingController(text: 'qwe@qwe.com');
-  final TextEditingController passwordController = TextEditingController(text: 'test12');
+  final TextEditingController emailController = TextEditingController(); //(text: 'qwe@qwe.com');
+  final TextEditingController passwordController = TextEditingController(); //(text: 'test12');
 
   @override
   Widget build(BuildContext context) {
@@ -36,8 +37,8 @@ class LoginScreen extends StatelessWidget {
               child: Column(
                 children: [
                   const Spacer(),
-                  TextFormField(
-                    controller: emailController,
+                  EmailInput(
+                    textEditingController: emailController,
                   ),
                   SizedBox(
                     height: verticalPadding(
@@ -45,8 +46,8 @@ class LoginScreen extends StatelessWidget {
                       pixels: 20,
                     ),
                   ),
-                  TextFormField(
-                    controller: passwordController,
+                  PasswordInput(
+                    textEditingController: passwordController,
                   ),
                   SizedBox(
                     height: verticalPadding(
@@ -62,7 +63,13 @@ class LoginScreen extends StatelessWidget {
                         password: passwordController.text,
                       );
                     },
-                    child: state is AuthInProgress ? const CircularProgressIndicator() : Text(LocaleKeys.login.tr()),
+                    child: state is AuthInProgress
+                        ? const CircularProgressIndicator()
+                        : Text(
+                            LocaleKeys.login.tr(),
+                            style:
+                                Theme.of(context).textTheme.bodyMedium?.copyWith(color: Theme.of(context).primaryColor),
+                          ),
                   ),
                   SizedBox(
                     height: verticalPadding(
@@ -73,11 +80,11 @@ class LoginScreen extends StatelessWidget {
                   RichText(
                     text: TextSpan(
                       text: LocaleKeys.dont_have_an_account.tr(),
-                      style: const TextStyle(color: Colors.black),
+                      style: Theme.of(context).textTheme.bodySmall,
                       children: [
                         TextSpan(
                           text: LocaleKeys.create_it_now.tr(),
-                          style: const TextStyle(color: Colors.deepPurple),
+                          style: Theme.of(context).textTheme.bodySmall?.copyWith(color: Theme.of(context).primaryColor),
                           recognizer: TapGestureRecognizer()
                             ..onTap = () => context.router.pushNamed(Routes.registrationScreen),
                         ),
